@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/03 03:50:01 by yousong          ###   ########.fr       */
+/*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
+/*   Updated: 2025/01/25 11:39:48 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSER_H
+# define PARSER_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libs/libft/libft.h"
-# include "libs/get_next_line/get_next_line.h"
+# include "includes/minishell.h"
+
+# define SQOUTE			1
+# define DQOUTE			2
+
+# define PIPE			3
+# define REDIR			4
+# define D_REDIR		5
 
 #endif
