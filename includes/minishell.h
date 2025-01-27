@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/23 20:49:18 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:52:49 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libs/libft/libft.h"
-# include "libs/get_next_line/get_next_line.h"
+# include "../libs/libft/libft.h"
+# include "../libs/get_next_line/get_next_line.h"
+
+# include "../includes/parser.h"
 
 typedef struct s_cmd
 {
@@ -34,5 +36,8 @@ typedef struct s_cmd
 	int				unit_count;
 	struct s_cmd	*next;
 }	t_cmd;
+
+void	run_minishell(void);
+void	show_logo(void);
 
 #endif

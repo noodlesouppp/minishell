@@ -6,11 +6,11 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:58:01 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 11:49:12 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:37:57 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "../includes/parser.h"
 
 /* tokenises input line based on spaces 
 	respects quotes

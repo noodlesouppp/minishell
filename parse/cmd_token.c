@@ -6,18 +6,22 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 11:00:16 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/26 08:08:56 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:40:16 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "../includes/parser.h"
 
-int	tokenize_cmd(char **token, char *line, int i, int *idx)
+/* splits tokens into subtokens based on which special char it is 
+	ignores any special characters if inside quotes 
+	returns the start index of REMAINDER part of line */
+
+int	tokenise_cmd(char **token, char *line, int i, int *idx)
 {
 	int	start;
 
 	start = 0;
-	while (line[++i] != '\0')
+	while (line[i++] != '\0')
 	{
 		if (!is_in_quote(line, i))
 		{
@@ -40,7 +44,6 @@ int	tokenize_cmd(char **token, char *line, int i, int *idx)
 	}
 	return (start);
 }
-
 
 /* adjusts total token count when encountering special characters
 	skips over an iteration for double redirections */
@@ -65,7 +68,8 @@ void	check_for_cmd(char *line, int *i, int *count)
 	}
 }
 
-/* counts the no. of special command tokens in the input*/
+/* counts how many tokens there'll be after splitting on
+	special characters ("", '', >> etc)*/
 
 int	cmd_space(char **line)
 {
@@ -83,7 +87,11 @@ int	cmd_space(char **line)
 	return (count);
 }
 
-char	get_cmd_token(char **line)
+/* uses tokenise_cmd to split the tokens based on special chars 
+	after tokenise_cmd it handles remainder part of token 
+	e.g "ls>>out" becomes ["ls", ">>", "out"]     */
+
+char	**get_cmd_token(char **line)
 {
 	char	**token;
 	int		i;
@@ -94,8 +102,8 @@ char	get_cmd_token(char **line)
 	token = (char **)malloc(sizeof(char *) * (cmd_space(line) + 1));
 	while (*line)
 	{
-		i = -1;
-		start = tokenize_cmd(token, *line, i, &index);
+		i = 0;
+		start = tokenise_cmd(token, *line, i, &index);
 		if ((*line)[start] != '\0')
 			token[index++] = ft_substr(*line, start, ft_strlen(*line) - start);
 		line++;

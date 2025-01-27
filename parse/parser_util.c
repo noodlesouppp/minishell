@@ -6,11 +6,25 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 04:35:34 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 12:07:52 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:43:48 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "../includes/parser.h"
+
+void	free_tokens(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		free(tokens[i]);
+		tokens[i] = NULL;
+		i++;
+	}
+	free(tokens);
+}
 
 /* returns if a character is a special command or nah */
 
@@ -30,7 +44,7 @@ int	is_cmd(char *line, int i)
 
 /* returns if a character is inside quotes or nah*/
 
-int	is_in_quote(char **line, int idx)
+int	is_in_quote(char *line, int idx)
 {
 	int	i;
 	int	quote_flag;

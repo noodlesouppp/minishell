@@ -6,15 +6,15 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/23 22:33:45 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:37:50 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "../includes/parser.h"
 
-t_cmd	*parse_cmd(char *line)
+char	**parse_cmd(char *line)
 {
-	t_cmd	*cmd;
+//	t_cmd	*cmd;
 	char	**token;
 	char	**tmp;
 
@@ -31,8 +31,9 @@ t_cmd	*parse_cmd(char *line)
 		free_tokens(token);
 		return (NULL);
 	}
-	token = check_path(token);
-	cmd = get_cmd_info(token);
-	free_tokens(token);
-	return (cmd);
+//	token = check_path(token);
+//	cmd = get_cmd_info(token);
+//	free_tokens(token);
+//	return (cmd);
+	return (token);
 }
