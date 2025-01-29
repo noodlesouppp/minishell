@@ -6,11 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 05:44:56 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/29 05:45:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/29 18:11:16 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
+
+/* initialise a clean dummy node for a command token */
 
 t_cmd	*cmd_lstinit(void)
 {
@@ -36,6 +38,8 @@ void	cmd_lstadd(t_cmd *head)
 	node->next = NULL;
 }
 
+/* just removes the quotes from the input tokens */
+
 void	remove_quotes(char **input)
 {
 	char	*temp;
@@ -48,6 +52,8 @@ void	remove_quotes(char **input)
 		free(temp);
 	}
 }
+
+/* counts number of pipes ONLY if they are not in quotes */
 
 int	cnt_pipe(char **token)
 {

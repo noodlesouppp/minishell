@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/29 05:43:33 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/29 12:10:03 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,21 @@ t_cmd	*init_input_util(t_cmd *cmd, char **token, int *i, int *unit)
 	return (cmd);
 }
 
+/* initialises the INPUT for each cmd segment through the linked list*/
+
 void	init_input(t_cmd *cmd, char **token, int unit)
 {
 	int	i;
 
-	i = -1;
-	while (token[++i])
+	i = 0;
+	while (token[i++])
 	{
 		cmd->unit_count = unit;
 		if (is_cmd(token[i], 0) > 0)
 		{
 			cmd = init_input_util(cmd, token, &i, &unit);
 			token += i;
-			i = -1;
+			i = 0;
 			if (token[i + 1])
 			{
 				cmd_lstadd(cmd);
@@ -83,6 +85,10 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 		cmd->input = ft_2d_strndup(token, i);
 	}
 }
+
+/* convert the token array into t_cmd nodes
+	and init them into corresponding values
+	unit count is for tracking command segments */
 
 t_cmd	*get_cmd_info(char **token)
 {
