@@ -6,13 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 16:46:11 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/28 12:54:47 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-//char	**g_envp = NULL;
+t_env	*g_env;
 
 void	show_logo(void)
 {
@@ -33,8 +33,7 @@ void	show_logo(void)
 void	run_minishell(void)
 {
 	char	*line;
-	char	**cmd;
-//	t_cmd	*cmd;
+	t_cmd	*cmd;
 
 	while (1)
 	{
@@ -48,8 +47,6 @@ void	run_minishell(void)
 			cmd = parse_cmd(line);
 			free(line);
 			line = NULL;
-			for (int i = 0; cmd[i]; i++)
-				printf("cmd[%d]: %s\n", i, cmd[i]);
 //			if (cmd)
 //				execute_cmd(cmd);
 		}
@@ -73,12 +70,3 @@ int	main(int argc, char **argv, char **envp)
 //	free_envlist();
 	return (0);
 }
-
-/*void	show_prompt(void)
-{
-	static char	*curpath;
-
-	ft_putstr_fd(getcwd(curpath, MAXSIZE), STDIN);
-	ft_putstr_fd("> ", STDOUT);
-}
-*/

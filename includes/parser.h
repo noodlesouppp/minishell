@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 16:43:54 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:58:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define REDIR			4
 # define D_REDIR		5
 
-char	**parse_cmd(char *line);
+t_cmd	*parse_cmd(char *line);
 
 char	**get_space_token(char *line);
 int		count_space(char *line);

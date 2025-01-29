@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 11:00:16 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 16:40:16 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/28 14:17:18 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	check_for_cmd(char *line, int *i, int *count)
 		if (line[*i + 1] != '\0')
 			(*count)++;
 	}
-
 	else if (is_cmd(line, *i) == PIPE || is_cmd(line, *i) == REDIR)
 	{
 		if (*i > 0)

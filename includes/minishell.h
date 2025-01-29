@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 16:52:49 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/29 05:46:26 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 # include "../libs/get_next_line/get_next_line.h"
 
 # include "../includes/parser.h"
+# include "../includes/environment.h"
+# include "../includes/utils.h"
+
+enum	e_str_type {word, pipeline, redirect};
 
 typedef struct s_cmd
 {
