@@ -6,13 +6,16 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 04:35:34 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 02:54:48 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 14:26:27 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-char	*no_quote_strdup(char *s1)
+/* first calculates the resulting len excluding any quotes, 
+	then duplicates the resulting string */
+
+char	*rm_quote_strdup(char *s1)
 {
 	char	*dup;
 	int		len;
@@ -20,15 +23,15 @@ char	*no_quote_strdup(char *s1)
 	int		dup_idx;
 
 	len = ft_strlen(s1);
-	i = -1;
-	while (s1[++i])
+	i = 0;
+	while (s1[i++])
 		if (((s1[i] == '"' && is_in_quote(s1, i) != SQOUTE)
 				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQOUTE)))
 			len--;
 	dup = malloc(sizeof(char) * (len + 1));
-	i = -1;
+	i = 0;
 	dup_idx = 0;
-	while (s1[++i])
+	while (s1[i++])
 	{
 		while (((s1[i] == '"' && is_in_quote(s1, i) != SQOUTE)
 				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQOUTE)))

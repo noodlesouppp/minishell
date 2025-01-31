@@ -6,11 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/30 22:18:31 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 14:18:27 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
+
+/* lastly, set if a cmd segment is pipeline, redirect, or word */
 
 void	init_type(t_cmd *cmd)
 {
@@ -21,9 +23,9 @@ void	init_type(t_cmd *cmd)
 		cmd_flag = is_cmd(cmd->input[0], 0);
 		if (cmd_flag > 0)
 		{
-			if (cmd_flag == 1)
+			if (cmd_flag == PIPE)
 				cmd->type = pipeline;
-			else if (cmd_flag > 1)
+			else if (cmd_flag > REDIR)
 				cmd->type = redirect;
 			else
 				cmd->type = word;
@@ -34,8 +36,10 @@ void	init_type(t_cmd *cmd)
 	}
 }
 
-/* if special command is not at start, save previous tokens
-	*/
+/* first checks if token is before special cmd i.e. a word
+	if it is, copies as a cmd segment until the special cmd
+	if any redirection, instead copy the redirection then advance 2
+	otherwise if pipe, copy pipe token, unit_count++, skip over pipe */
 
 t_cmd	*init_input_util(t_cmd *cmd, char **token, int *i, int *unit)
 {
@@ -139,5 +143,4 @@ t_cmd	*parse_cmd(char *line)
 	cmd = get_cmd_info(token);
 	free_tokens(token);
 	return (cmd);
-	return (token);
 }

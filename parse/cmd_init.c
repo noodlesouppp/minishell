@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 05:44:56 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/29 18:11:16 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 14:24:11 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	cmd_lstadd(t_cmd *head)
 	node->next = NULL;
 }
 
-/* just removes the quotes from the input tokens */
+/* iterates through and removes the quotes from the input tokens */
 
 void	remove_quotes(char **input)
 {
@@ -47,7 +47,7 @@ void	remove_quotes(char **input)
 	while (*input)
 	{
 		temp = *input;
-		*input = no_quote_strdup(*input);
+		*input = rm_quote_strdup(*input);
 		input++;
 		free(temp);
 	}

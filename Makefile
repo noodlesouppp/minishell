@@ -6,7 +6,7 @@
 #    By: yousong <yousong@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/03 02:40:33 by yousong           #+#    #+#              #
-#    Updated: 2025/01/27 16:53:37 by yousong          ###   ########.fr        #
+#    Updated: 2025/01/31 14:48:23 by yousong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRCS = $(PARSE_DIR)/parser.c \
        $(PARSE_DIR)/space_token.c \
        $(PARSE_DIR)/cmd_token.c \
        $(PARSE_DIR)/parse_error.c \
+	   $(PARSE_DIR)/parse_path.c \
+	   $(PARSE_DIR)/cmd_init.c \
 
 OBJS = $(SRCS:.c=.o)
 GNL_OBJS = $(GNL_SRC:%.c=%.o)
