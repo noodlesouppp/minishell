@@ -6,11 +6,11 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:56:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 14:17:45 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 15:17:23 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../includes/minishell.h"
 
 int	is_equal(char *s1, char *s2)
 {

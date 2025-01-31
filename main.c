@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 12:54:47 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:22:44 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,24 @@ void	run_minishell(void)
 			if (line[0] != '\0')
 				add_history(line);
 			cmd = parse_cmd(line);
+			printf("Full command input: \"%s\"\n", line);
 			free(line);
 			line = NULL;
+			if (cmd)
+			{
+				t_cmd	*tmp = cmd;
+				while (tmp)
+				{
+					printf("Parsed command segment:\n");
+					for (int i = 0; tmp->input[i]; i++) // Print each argument
+						printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
+					
+					printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
+						tmp->type, tmp->pipe_count, tmp->unit_count);
+
+					tmp = tmp->next;
+				}
+			}
 //			if (cmd)
 //				execute_cmd(cmd);
 		}

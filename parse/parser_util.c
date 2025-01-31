@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 04:35:34 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 14:26:27 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:01:24 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ char	*rm_quote_strdup(char *s1)
 	int		dup_idx;
 
 	len = ft_strlen(s1);
-	i = 0;
-	while (s1[i++])
-		if (((s1[i] == '"' && is_in_quote(s1, i) != SQOUTE)
-				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQOUTE)))
+	i = -1;
+	while (s1[++i])
+		if (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE)
+				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			len--;
 	dup = malloc(sizeof(char) * (len + 1));
-	i = 0;
+	i = -1;
 	dup_idx = 0;
-	while (s1[i++])
+	while (s1[++i])
 	{
-		while (((s1[i] == '"' && is_in_quote(s1, i) != SQOUTE)
-				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQOUTE)))
+		while (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE)
+				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			i++;
 		if (s1[i] == '\0')
 			break ;
@@ -52,6 +52,11 @@ char	**ft_array_dup(char **arr, int len)
 	int		i;
 
 	i = 0;
+/*	if (!arr)
+	{
+		printf("DEBUG: ft_array_dup called with NULL\n");
+		return (NULL);
+	}*/
 	new = (char **)malloc(sizeof(char *) * (len + 1));
 	while (i < len)
 	{
@@ -106,15 +111,15 @@ int	is_in_quote(char *line, int idx)
 		if (line[i] == '"')
 		{
 			if (quote_flag == 0)
-				quote_flag = DQOUTE;
-			else if (quote_flag == DQOUTE)
+				quote_flag = DQUOTE;
+			else if (quote_flag == DQUOTE)
 				quote_flag = 0;
 		}
 		else if (line[i] == '\'')
 		{
 			if (quote_flag == 0)
-				quote_flag = SQOUTE;
-			else if (quote_flag == SQOUTE)
+				quote_flag = SQUOTE;
+			else if (quote_flag == SQUOTE)
 				quote_flag = 0;
 		}
 	}

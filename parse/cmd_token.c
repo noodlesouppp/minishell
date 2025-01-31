@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 11:00:16 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 14:17:18 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:57:05 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,28 @@ int	tokenise_cmd(char **token, char *line, int i, int *idx)
 	int	start;
 
 	start = 0;
-	while (line[i++] != '\0')
+	while (line[++i] != '\0')
 	{
 		if (!is_in_quote(line, i))
 		{
 			if (is_cmd(line, i) == D_REDIR)
 			{
-				if (i > 0 && !is_cmd(line, i - 1))
+				if (i > 0)
+				{
 					token[(*idx)++] = ft_substr(line, start, i - start);
+					start = i;
+				}
 				token[(*idx)++] = ft_substr(line, i, 2);
 				i++;
 				start = i + 1;
 			}
 			else if (is_cmd(line, i) == PIPE || is_cmd(line, i) == REDIR)
 			{
-				if (i > 0 && !is_cmd(line, i - 1))
+				if (i > 0)
+				{
 					token[(*idx)++] = ft_substr(line, start, i - start);
+					start = i;
+				}
 				token[(*idx)++] = ft_substr(line, i, 1);
 				start = i + 1;
 			}
@@ -75,11 +81,12 @@ int	cmd_space(char **line)
 	int	i;
 	int	count;
 
+	count = 0;
 	while (*line)
 	{
-		i = 0;
+		i = -1;
 		count++;
-		while ((*line)[i++] != '\0')
+		while ((*line)[++i] != '\0')
 			check_for_cmd(*line, &i, &count);
 		line++;
 	}
@@ -101,7 +108,7 @@ char	**get_cmd_token(char **line)
 	token = (char **)malloc(sizeof(char *) * (cmd_space(line) + 1));
 	while (*line)
 	{
-		i = 0;
+		i = -1;
 		start = tokenise_cmd(token, *line, i, &index);
 		if ((*line)[start] != '\0')
 			token[index++] = ft_substr(*line, start, ft_strlen(*line) - start);

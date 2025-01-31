@@ -6,12 +6,14 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:27:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 12:46:25 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 15:49:05 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENVIRONMENT_H
 # define ENVIRONMENT_H
+
+# include "../includes/minishell.h"
 
 # include "../libs/libft/libft.h"
 # include <stdio.h>

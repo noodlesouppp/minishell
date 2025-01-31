@@ -6,11 +6,12 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:14:52 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 13:23:10 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:06:18 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/parser.h"
+#include "../includes/utils.h"
 
 /* finds the value of the env variable 
 	if $? returns exit status instead 
@@ -62,17 +63,17 @@ int	expand_token(char **token, int dollar_idx)
 	len = find_key((*token) + dollar_idx + 1, &key);
 	if (len == 0)
 		return (dollar_idx + 1);
-	env = get_env(key);
+	env = find_env(key);
 	(*token)[dollar_idx] = '\0';
 	result = ft_strjoin(*token, env);
 	tmp = result;
 	result = ft_strjoin(result, &(*token)[dollar_idx + len + 1]);
 	free(tmp);
-	free(*token);
-	*token = result;
 	free(key);
+	free(*token);
 	len = ft_strlen(env);
 	free(env);
+	*token = result;
 	return (dollar_idx + len);
 }
 
@@ -85,13 +86,13 @@ char	**check_path(char **token)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (token[i++])
+	i = -1;
+	while (token[++i])
 	{
-		j = 0;
-		while (token[i][j++])
+		j = -1;
+		while (token[i][++j])
 		{
-			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQOUTE
+			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE
 				&& token[i][j + 1] != '\'')
 			{
 				if (i > 0 && is_equal(token[i - 1], "<<"))

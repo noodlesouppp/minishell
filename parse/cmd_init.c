@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 05:44:56 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 14:24:11 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:11:20 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,17 @@ void	remove_quotes(char **input)
 {
 	char	*temp;
 
+	if (!input)
+		return ;
 	while (*input)
 	{
 		temp = *input;
-		*input = rm_quote_strdup(*input);
+		if (temp)
+		{
+			*input = rm_quote_strdup(*input);
+			free(temp);
+		}
 		input++;
-		free(temp);
 	}
 }
 

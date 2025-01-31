@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 14:18:27 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:08:13 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	init_type(t_cmd *cmd)
 {
 	int	cmd_flag;
 
+	printf("DEBUG: Entering init_type\n");
 	while (cmd)
 	{
+		printf("DEBUG: cmd->input[0]: %s\n", cmd->input[0]);
 		cmd_flag = is_cmd(cmd->input[0], 0);
 		if (cmd_flag > 0)
 		{
@@ -71,15 +73,15 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 {
 	int	i;
 
-	i = 0;
-	while (token[i++])
+	i = -1;
+	while (token[++i])
 	{
 		cmd->unit_count = unit;
 		if (is_cmd(token[i], 0) > 0)
 		{
 			cmd = init_input_util(cmd, token, &i, &unit);
 			token += i;
-			i = 0;
+			i = -1;
 			if (token[i + 1])
 			{
 				cmd_lstadd(cmd);

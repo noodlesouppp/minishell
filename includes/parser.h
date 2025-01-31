@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 14:47:34 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 15:56:39 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 # include "../includes/minishell.h"
 
-# define SQOUTE			1
-# define DQOUTE			2
+# define SQUOTE			1
+# define DQUOTE			2
 
 # define PIPE			1
 # define REDIR			2
 # define D_REDIR		3
+
+typedef struct s_cmd	t_cmd;
 
 /* parser.c */
 t_cmd		*parse_cmd(char *line);
@@ -54,8 +56,6 @@ int			tokenise_cmd(char **token, char *line, int i, int *idx);
 /* parse_path.c */
 char		**check_path(char **token);
 int			expand_token(char **token, int dollar_idx);
-static int	find_key(char *start, char **key);
-static char	*find_env(char *key);
 
 /* cmd_init.c */
 int			cnt_pipe(char **token);
