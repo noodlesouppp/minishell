@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/27 16:58:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:50:39 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # define SQOUTE			1
 # define DQOUTE			2
 
-# define PIPE			3
-# define REDIR			4
-# define D_REDIR		5
+# define PIPE			1
+# define REDIR			2
+# define D_REDIR		3
 
 t_cmd	*parse_cmd(char *line);
 

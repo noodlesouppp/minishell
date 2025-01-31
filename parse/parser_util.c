@@ -6,11 +6,58 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 04:35:34 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 14:16:40 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/31 02:54:48 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
+
+char	*no_quote_strdup(char *s1)
+{
+	char	*dup;
+	int		len;
+	int		i;
+	int		dup_idx;
+
+	len = ft_strlen(s1);
+	i = -1;
+	while (s1[++i])
+		if (((s1[i] == '"' && is_in_quote(s1, i) != SQOUTE)
+				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQOUTE)))
+			len--;
+	dup = malloc(sizeof(char) * (len + 1));
+	i = -1;
+	dup_idx = 0;
+	while (s1[++i])
+	{
+		while (((s1[i] == '"' && is_in_quote(s1, i) != SQOUTE)
+				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQOUTE)))
+			i++;
+		if (s1[i] == '\0')
+			break ;
+		dup[dup_idx++] = s1[i];
+	}
+	dup[dup_idx] = '\0';
+	return (dup);
+}
+
+/* duplicates 2d array up until specified no. of strings and returns new copy */
+
+char	**ft_array_dup(char **arr, int len)
+{
+	char	**new;
+	int		i;
+
+	i = 0;
+	new = (char **)malloc(sizeof(char *) * (len + 1));
+	while (i < len)
+	{
+		new[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
 
 void	free_tokens(char **tokens)
 {

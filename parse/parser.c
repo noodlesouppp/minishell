@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/29 12:10:03 by yousong          ###   ########.fr       */
+/*   Updated: 2025/01/30 22:18:31 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,34 @@ void	init_type(t_cmd *cmd)
 	}
 }
 
+/* if special command is not at start, save previous tokens
+	*/
+
 t_cmd	*init_input_util(t_cmd *cmd, char **token, int *i, int *unit)
 {
 	if (*i != 0)
 	{
-		cmd->input = ft_2d_strndup(token, *i);
+		cmd->input = ft_array_dup(token, *i);
 		cmd_lstadd(cmd);
 		cmd = cmd->next;
 		cmd->unit_count = *unit;
 	}
-	if (is_cmd(token[*i], 0) >= 2)
+	if (is_cmd(token[*i], 0) >= REDIR)
 	{
-		cmd->input = ft_2d_strndup(token + *i, 2);
+		cmd->input = ft_array_dup(token + *i, 2);
 		*i += 2;
 	}
-	else if (is_cmd(token[*i], 0) == 1)
+	else if (is_cmd(token[*i], 0) == PIPE)
 	{
-		cmd->input = ft_2d_strndup(token + *i, 1);
+		cmd->input = ft_array_dup(token + *i, 1);
 		(*unit)++;
 		(*i)++;
 	}
 	return (cmd);
 }
 
-/* initialises the INPUT for each cmd segment through the linked list*/
+/* initialises the INPUT for each cmd segment through the linked list
+	if token is special cmd, */
 
 void	init_input(t_cmd *cmd, char **token, int unit)
 {
@@ -82,7 +86,7 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 	if (cmd->input == NULL)
 	{
 		cmd->unit_count = unit;
-		cmd->input = ft_2d_strndup(token, i);
+		cmd->input = ft_array_dup(token, i);
 	}
 }
 
