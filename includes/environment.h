@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:27:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 15:49:05 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/04 01:02:57 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct	s_env
 
 extern t_env	*g_env;
 
+/* env_util.c */
 char	*get_env(char *key);
+char	**env_to_array(void);
+void	free_envlist(void);
+
+/* env.c */
+int		set_envlist(char **envp);
+int		add_env(char *env);
 
 #endif

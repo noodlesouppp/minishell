@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 17:08:13 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/10 03:02:35 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@
 void	init_type(t_cmd *cmd)
 {
 	int	cmd_flag;
-
-	printf("DEBUG: Entering init_type\n");
+	
 	while (cmd)
 	{
-		printf("DEBUG: cmd->input[0]: %s\n", cmd->input[0]);
 		cmd_flag = is_cmd(cmd->input[0], 0);
 		if (cmd_flag > 0)
 		{
 			if (cmd_flag == PIPE)
 				cmd->type = pipeline;
-			else if (cmd_flag > REDIR)
+			else if (cmd_flag >= REDIR)
 				cmd->type = redirect;
 			else
 				cmd->type = word;

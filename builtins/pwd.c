@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 12:58:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:39:40 by yousong          ###   ########.fr       */
+/*   Created: 2024/12/08 12:10:04 by yousong           #+#    #+#             */
+/*   Updated: 2025/02/04 00:09:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "../includes/builtins.h"
 
-# include <stdio.h>
-# include <sys/errno.h>
-# include <unistd.h>
+int	pwd(void)
+{
+	char	*dir;
 
-# include "../includes/minishell.h"
-# include "../libs/libft/libft.h"
-
-int			\
-err_print(char *prefix, char *errmsg, char *postfix, int return_val);
-int			is_equal(char *s1, char *s2);
-int			is_minishell(char *input);
-
-#endif
+	dir = getcwd(NULL, 0);
+	if (!dir)
+	{
+		perror(NULL);
+		return (1);
+	}
+	printf("%s\n", dir);
+	free(dir);
+	return (0);
+}

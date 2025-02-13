@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 16:22:44 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/10 03:03:33 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	show_logo(void)
 	char	*line;
 
 	fd = open("utils/ascii.txt", O_RDONLY);
-	line = get_next_line(fd);
-	while (get_next_line(fd))
+	while ((line = get_next_line(fd)))
 	{
 		printf("%s", line);
 		free(line);
@@ -37,18 +36,17 @@ void	run_minishell(void)
 
 	while (1)
 	{
-//		set_echoctl(0);
-//		set_handler(print_prompt, NULL);
+		set_echoctl(0);
+		set_handler(print_prompt, NULL);
 		line = readline("minishell> ");
 		if (line)
 		{
 			if (line[0] != '\0')
 				add_history(line);
 			cmd = parse_cmd(line);
-			printf("Full command input: \"%s\"\n", line);
 			free(line);
 			line = NULL;
-			if (cmd)
+/*			if (cmd)
 			{
 				t_cmd	*tmp = cmd;
 				while (tmp)
@@ -62,9 +60,9 @@ void	run_minishell(void)
 
 					tmp = tmp->next;
 				}
-			}
-//			if (cmd)
-//				execute_cmd(cmd);
+			}*/
+			if (cmd)
+				process(cmd);
 		}
 		else
 		{
@@ -78,11 +76,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	show_logo();
-//	set_envlist(envp);
+	set_envlist(envp);
 	run_minishell();
 	rl_clear_history();
-//	free_envlist();
+	free_envlist();
 	return (0);
 }

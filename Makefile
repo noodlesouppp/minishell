@@ -6,7 +6,7 @@
 #    By: yousong <yousong@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/03 02:40:33 by yousong           #+#    #+#              #
-#    Updated: 2025/01/31 15:14:50 by yousong          ###   ########.fr        #
+#    Updated: 2025/02/04 00:50:50 by yousong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,9 @@ GNL_SRC = $(GNL_DIR)get_next_line.c \
 PARSE_DIR = parse
 UTILS_DIR = utils
 ENV_DIR = env
+SIGNAL_DIR = signal
+EXEC_DIR = exec
+BUILTINS_DIR = builtins
 
 SRCS = $(PARSE_DIR)/parser.c \
        $(PARSE_DIR)/parser_util.c \
@@ -35,6 +38,22 @@ SRCS = $(PARSE_DIR)/parser.c \
 	   $(PARSE_DIR)/cmd_init.c \
 	   $(UTILS_DIR)/utils.c \
 	   $(ENV_DIR)/env_util.c \
+	   $(ENV_DIR)/env.c \
+	   $(SIGNAL_DIR)/signal_util.c \
+	   $(SIGNAL_DIR)/signals.c \
+	   $(EXEC_DIR)/process.c \
+	   $(EXEC_DIR)/command.c \
+	   $(EXEC_DIR)/here_doc.c \
+	   $(EXEC_DIR)/set_fd.c \
+	   $(EXEC_DIR)/redirect.c \
+	   $(BUILTINS_DIR)/cd.c \
+	   $(BUILTINS_DIR)/controller.c \
+	   $(BUILTINS_DIR)/echo.c \
+	   $(BUILTINS_DIR)/env.c \
+	   $(BUILTINS_DIR)/exit.c \
+	   $(BUILTINS_DIR)/export.c \
+	   $(BUILTINS_DIR)/pwd.c \
+	   $(BUILTINS_DIR)/unset.c
 
 OBJS = $(SRCS:.c=.o)
 GNL_OBJS = $(GNL_SRC:%.c=%.o)

@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 12:58:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:39:40 by yousong          ###   ########.fr       */
+/*   Created: 2024/12/11 19:21:21 by yousong           #+#    #+#             */
+/*   Updated: 2025/02/04 00:05:52 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "../includes/builtins.h"
+#include "../includes/execute.h"
 
-# include <stdio.h>
-# include <sys/errno.h>
-# include <unistd.h>
+int	env(void)
+{
+	t_env	*tmp;
 
-# include "../includes/minishell.h"
-# include "../libs/libft/libft.h"
-
-int			\
-err_print(char *prefix, char *errmsg, char *postfix, int return_val);
-int			is_equal(char *s1, char *s2);
-int			is_minishell(char *input);
-
-#endif
+	tmp = g_env;
+	while (tmp)
+	{
+		if (tmp->value)
+			printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
+	return (0);
+}

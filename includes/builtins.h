@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 12:58:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:39:40 by yousong          ###   ########.fr       */
+/*   Created: 2025/02/03 21:42:18 by yousong           #+#    #+#             */
+/*   Updated: 2025/02/04 00:21:48 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
 # include <stdio.h>
 # include <sys/errno.h>
-# include <unistd.h>
 
+# include "../includes/environment.h"
 # include "../includes/minishell.h"
-# include "../libs/libft/libft.h"
+# include "../includes/utils.h"
 
-int			\
-err_print(char *prefix, char *errmsg, char *postfix, int return_val);
-int			is_equal(char *s1, char *s2);
-int			is_minishell(char *input);
+int		builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num);
+int		is_builtin(t_cmd *cmd, int child_num);
+
+int		echo(t_cmd *cmd);
+int		env(void);
+int		export(t_cmd *cmd);
+int		pwd(void);
+int		cd(t_cmd *cmd);
+int		unset(t_cmd *cmd);
+int		ft_exit(t_cmd *cmd);
 
 #endif
