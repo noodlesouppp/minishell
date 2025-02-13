@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 00:03:35 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:03:58 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:02:03 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cd(t_cmd *cmd)
 
 	if (!cmd->input[1])
 	{
-		path = get_env("HOME");
+		path = get_env("HOME", cmd->env);
 		if (!path)
 			return (err_print("cd: ", "HOME not set", NULL, 1));
 	}

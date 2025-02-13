@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:55:25 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:30:40 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@
 # include "../libs/libft/libft.h"
 # include "../libs/get_next_line/get_next_line.h"
 
-# include "../includes/parser.h"
-# include "../includes/environment.h"
-# include "../includes/utils.h"
-# include "../includes/signals.h"
-# include "../includes/execute.h"
-# include "../includes/builtins.h"
+# include "parser.h"
+# include "environment.h"
+# include "utils.h"
+# include "signals.h"
+# include "execute.h"
+# include "builtins.h"
 
 enum	e_str_type {word, pipeline, redirect};
 
@@ -47,9 +47,11 @@ typedef struct s_cmd
 	int				pipe_count;
 	int				unit_count;
 	struct s_cmd	*next;
+	t_env			*env;
+	int				*exit_stat;
 }	t_cmd;
 
-void	run_minishell(void);
+void	run_minishell(t_env *env);
 void	show_logo(void);
 
 #endif

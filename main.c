@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/10 03:03:33 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:42:11 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	show_logo(void)
 	close(fd);
 }
 
-void	run_minishell(void)
+void	run_minishell(t_env *env)
 {
-	char	*line;
 	t_cmd	*cmd;
+	char	*line;
+	int		exit_stat;
 
+	exit_stat = 0;
 	while (1)
 	{
 		set_echoctl(0);
@@ -43,26 +45,28 @@ void	run_minishell(void)
 		{
 			if (line[0] != '\0')
 				add_history(line);
-			cmd = parse_cmd(line);
+			cmd = parse_cmd(line, exit_stat, env);
 			free(line);
 			line = NULL;
-/*			if (cmd)
-			{
-				t_cmd	*tmp = cmd;
-				while (tmp)
-				{
-					printf("Parsed command segment:\n");
-					for (int i = 0; tmp->input[i]; i++) // Print each argument
-						printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
+			// if (cmd)
+			// {
+			// 	t_cmd	*tmp = cmd;
+			// 	while (tmp)
+			// 	{
+			// 		printf("Parsed command segment:\n");
+			// 		for (int i = 0; tmp->input[i]; i++) // Print each argument
+			// 			printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
 					
-					printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
-						tmp->type, tmp->pipe_count, tmp->unit_count);
+			// 		printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
+			// 			tmp->type, tmp->pipe_count, tmp->unit_count);
 
-					tmp = tmp->next;
-				}
-			}*/
-			if (cmd)
-				process(cmd);
+			// 		tmp = tmp->next;
+			// 	}
+			// }
+			if (cmd) {
+				printf("env var: %s", cmd->env->key);
+				process(cmd, &exit_stat);
+			}
 		}
 		else
 		{
@@ -74,12 +78,16 @@ void	run_minishell(void)
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_env	*env;
+
 	(void)argc;
 	(void)argv;
 	show_logo();
-	set_envlist(envp);
-	run_minishell();
+	env = set_envlist(envp);
+
+	for (t_env *tmp = env; tmp; tmp = tmp->next)
+	run_minishell(env);
 	rl_clear_history();
-	free_envlist();
+	free_envlist(env);
 	return (0);
 }

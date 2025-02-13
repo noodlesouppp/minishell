@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:24:09 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 01:04:41 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:59:46 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	heredoc_quiet(int sig)
 {
 	if (sig == SIGINT)
-		*(g_env->exit_stat) = 1;
+		g_exit_status = 1;
 	rl_replace_line("", 1);
 }
 

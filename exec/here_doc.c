@@ -6,13 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/03 23:48:30 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:54:07 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
 
-static void	heredoc_expander(char **line)
+static void	heredoc_expander(char **line, int exit_stat, t_env *env)
 {
 	int	i;
 
@@ -21,14 +21,14 @@ static void	heredoc_expander(char **line)
 	{
 		if ((*line)[i] == '$')
 		{
-			i = expand_token(line, i);
+			i = expand_token(line, i, exit_stat, env);
 			if ((*line)[i] == '$')
 				i--;
 		}
 	}
 }
 
-static void	get_input(int fd, char *limiter)
+static void	get_input(int fd, char *limiter, int exit_stat, t_env *env)
 {
 	char	*input;
 	char	*limiter_tmp;
@@ -44,13 +44,13 @@ static void	get_input(int fd, char *limiter)
 			free(limiter_tmp);
 			return ;
 		}
-		heredoc_expander(&input);
+		heredoc_expander(&input, exit_stat, env);
 		ft_putstr_fd(input, fd);
 		free(input);
 	}
 }
 
-static void	heredoc_unit(t_cmd *cmd)
+static void	heredoc_unit(t_cmd *cmd, int exit_stat)
 {
 	char	*unit_cnt;
 	char	*file_name;
@@ -68,7 +68,7 @@ static void	heredoc_unit(t_cmd *cmd)
 				err_print("heredoc: tmp_err", ": ", strerror(errno), 1);
 				break ;
 			}
-			get_input(fd, cmd->input[1]);
+			get_input(fd, cmd->input[1], exit_stat, cmd->env);
 			close(fd);
 			free(unit_cnt);
 			free(file_name);
@@ -78,7 +78,7 @@ static void	heredoc_unit(t_cmd *cmd)
 	exit(EXIT_SUCCESS);
 }
 
-int	heredoc(t_cmd *cmd)
+int	heredoc(t_cmd *cmd, int *exit_stat)
 {
 	pid_t	pid;
 	int		statloc;
@@ -96,9 +96,9 @@ int	heredoc(t_cmd *cmd)
 	else
 	{
 		set_handler(heredoc_sigint, NULL);
-		heredoc_unit(cmd);
+		heredoc_unit(cmd, *exit_stat);
 	}
-	if (g_env->exit_stat == 0)
-		*(g_env->exit_stat) = WEXITSTATUS(statloc);
+	if (*exit_stat == 0)
+		*exit_stat = WEXITSTATUS(statloc);
 	return (WEXITSTATUS(statloc));
 }

@@ -6,14 +6,14 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 15:56:39 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:23:51 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "../includes/minishell.h"
+# include "minishell.h"
 
 # define SQUOTE			1
 # define DQUOTE			2
@@ -23,10 +23,11 @@
 # define D_REDIR		3
 
 typedef struct s_cmd	t_cmd;
+typedef struct s_env	t_env;
 
 /* parser.c */
-t_cmd		*parse_cmd(char *line);
-t_cmd		*get_cmd_info(char **token);
+t_cmd		*parse_cmd(char *line, int exit_stat, t_env *env);
+t_cmd		*get_cmd_info(char **token, t_env *env);
 void		init_input(t_cmd *cmd, char **token, int unit);
 t_cmd		*init_input_util(t_cmd *cmd, char **token, int *i, int *unit);
 void		init_type(t_cmd *cmd);
@@ -54,8 +55,8 @@ void		check_for_cmd(char *line, int *i, int *count);
 int			tokenise_cmd(char **token, char *line, int i, int *idx);
 
 /* parse_path.c */
-char		**check_path(char **token);
-int			expand_token(char **token, int dollar_idx);
+char		**check_path(char **token, int exit_stat, t_env *env);
+int			expand_token(char **token, int dollar_idx, int exit_stat, t_env *env_head);
 
 /* cmd_init.c */
 int			cnt_pipe(char **token);

@@ -6,14 +6,14 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:39:31 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/03 23:40:43 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:37:26 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/environment.h"
 #include "../includes/builtins.h"
 
-static void	env_add_back(char *env, int key_length)
+static void	env_add_back(char *env, int key_length, t_env **head)
 {
 	t_env	*new;
 	t_env	*tmp;
@@ -27,7 +27,7 @@ static void	env_add_back(char *env, int key_length)
 		else
 			new->value = ft_itoa((ft_atoi(env + key_length + 1) + 1));
 	}
-	tmp = g_env;
+	tmp = *head;
 	if (tmp)
 	{
 		while (tmp->next)
@@ -35,7 +35,7 @@ static void	env_add_back(char *env, int key_length)
 		tmp->next = new;
 	}
 	else
-		g_env = new;
+		*head = new;
 }
 
 static int	cnt_key_length(char *env)
@@ -52,17 +52,17 @@ static int	cnt_key_length(char *env)
 	return (-1);
 }
 
-int	add_env(char *env)
+int	add_env(char *env, t_env **head)
 {
 	t_env	*tmp;
 	int		key_length;
 
-	tmp = g_env;
+	tmp = *head;
 	key_length = cnt_key_length(env);
 	if (key_length == 0)
 		return (err_print("setenv ", env, ": Invalid argument", -1));
-	if (key_length > 0)
-		env[key_length] = '\0';
+	// if (key_length > 0)
+	// 	env[key_length] = '\0';
 	while (tmp)
 	{
 		if (is_equal(tmp->key, env))
@@ -76,28 +76,22 @@ int	add_env(char *env)
 		}
 		tmp = tmp->next;
 	}
-	env_add_back(env, key_length);
+	env_add_back(env, key_length, head);
 	return (0);
 }
 
-int	set_envlist(char **envp)
+t_env	*set_envlist(char **envp)
 {
 	int			i;
-	int			*exit_stat;
 	t_env		*tmp;
 
 	i = 0;
-	exit_stat = ft_calloc(1, sizeof(int));
+	tmp = NULL;
 	while (envp[i])
 	{
-		add_env(envp[i]);
+		add_env(envp[i], &tmp);
 		i++;
 	}
-	tmp = g_env;
-	while (tmp)
-	{
-		tmp->exit_stat = exit_stat;
-		tmp = tmp -> next;
-	}
-	return (0);
+	return (tmp);
 }
+

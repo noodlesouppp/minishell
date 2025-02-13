@@ -6,25 +6,23 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:36:30 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 01:02:46 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:08:11 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/environment.h"
 
-void	free_envlist(void)
+void	free_envlist(t_env *env)
 {
-	t_env	*next;
+	t_env	*tmp;
 
-	next = NULL;
-	free(g_env->exit_stat);
-	while (g_env)
+	while (env)
 	{
-		next = g_env->next;
-		free(g_env->key);
-		free(g_env->value);
-		free(g_env);
-		g_env = next;
+		tmp = env;
+		env = env->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
 	}
 }
 
@@ -42,12 +40,12 @@ static char	*node_to_line(t_env *node)
 	return (line);
 }
 
-static int	env_len(void)
+static int	env_len(t_cmd *cmd)
 {
 	t_env	*tmp;
 	int		cnt;
 
-	tmp = g_env;
+	tmp = cmd->env;
 	cnt = 0;
 	while (tmp)
 	{
@@ -57,15 +55,15 @@ static int	env_len(void)
 	return (cnt);
 }
 
-char	**env_to_array(void)
+char	**env_to_array(t_cmd *cmd)
 {
 	t_env	*tmp;
 	char	**envp;
 	int		env_idx;
 
-	tmp = g_env;
+	tmp = cmd->env;
 	env_idx = 0;
-	envp = malloc(sizeof(char *) * (env_len() + 1));
+	envp = malloc(sizeof(char *) * (env_len(cmd) + 1));
 	while (tmp)
 	{
 		if (tmp->value)
@@ -76,11 +74,11 @@ char	**env_to_array(void)
 	return (envp);
 }
 
-char	*get_env(char *key)
+char	*get_env(char *key, t_env *env)
 {
 	t_env	*tmp;
 
-	tmp = g_env;
+	tmp = env;
 	while (tmp)
 	{
 		if (is_equal(tmp->key, key))

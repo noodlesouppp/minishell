@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/10 03:02:35 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:23:20 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 	and init them into corresponding values
 	unit count is for tracking command segments */
 
-t_cmd	*get_cmd_info(char **token)
+t_cmd	*get_cmd_info(char **token, t_env *env)
 {
 	t_cmd	*cmd;
 	t_cmd	*head;
@@ -115,12 +115,13 @@ t_cmd	*get_cmd_info(char **token)
 		init_type(cmd);
 		cmd->pipe_count = p_cnt;
 		remove_quotes(cmd->input);
+		cmd->env = env;
 		cmd = cmd->next;
 	}
 	return (head);
 }
 
-t_cmd	*parse_cmd(char *line)
+t_cmd	*parse_cmd(char *line, int exit_stat, t_env *env)
 {
 	t_cmd	*cmd;
 	char	**token;
@@ -139,8 +140,9 @@ t_cmd	*parse_cmd(char *line)
 		free_tokens(token);
 		return (NULL);
 	}
-	token = check_path(token);
-	cmd = get_cmd_info(token);
+	token = check_path(token, exit_stat, env);
+	cmd = get_cmd_info(token, env);
+	printf("test %s\n", cmd->env->key);
 	free_tokens(token);
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:02:24 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:55:04 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:59:38 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	print_newline(int sig)
 	if (sig == SIGINT)
 	{
 		printf("\n");
-		*(g_env->exit_stat) = 130;
+		g_exit_status = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
 		printf("Quit: 3\n");
-		*(g_env->exit_stat) = 131;
+		g_exit_status = 131;
 	}
 	rl_on_new_line();
 	rl_replace_line("", 1);
@@ -53,9 +53,9 @@ void	print_newline(int sig)
 void	quiet(int sig)
 {
 	if (sig == SIGINT)
-		*(g_env->exit_stat) = 130;
+		g_exit_status = 130;
 	else if (sig == SIGQUIT)
-		*(g_env->exit_stat) = 131;
+		g_exit_status = 131;
 	rl_replace_line("", 1);
 }
 

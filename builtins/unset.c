@@ -6,25 +6,25 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 00:11:01 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:11:34 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:32:38 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static void	del_env(char *key)
+static void	del_env(char *key, t_cmd *cmd)
 {
 	t_env	*tmp;
 	t_env	*prev;
 
-	tmp = g_env;
+	tmp = cmd->env;
 	prev = NULL;
 	while (tmp)
 	{
 		if (is_equal(tmp->key, key))
 		{
 			if (!prev)
-				g_env = tmp->next;
+				cmd->env = tmp->next;
 			else
 				prev->next = tmp->next;
 			free(tmp->key);
@@ -44,6 +44,6 @@ int	unset(t_cmd *cmd)
 
 	i = 0;
 	while (cmd->input[++i])
-		del_env(cmd->input[i]);
+		del_env(cmd->input[i], cmd);
 	return (0);
 }

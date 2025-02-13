@@ -6,17 +6,17 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:31:17 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:08:03 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:06:37 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static void	print_env(void)
+static void	print_env(t_cmd *cmd)
 {
 	t_env	*tmp;
 
-	tmp = g_env;
+	tmp = cmd->env;
 	while (tmp)
 	{
 		ft_putstr_fd("declare -x ", 1);
@@ -44,10 +44,10 @@ int	export(t_cmd *cmd)
 			err_print("export: '", str, "': not a valid identifier", 1);
 			return (1);
 		}
-		if (add_env(str) < 0)
+		if (add_env(str, &cmd->env) < 0)
 			return (1);
 	}
 	else
-		print_env();
+		print_env(cmd);
 	return (0);
 }
