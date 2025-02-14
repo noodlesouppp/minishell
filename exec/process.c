@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 20:36:22 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/14 02:05:21 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	process(t_cmd *cmd, int *exit_stat)
 	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_count) + 1));
 	set_handler(quiet, quiet);
-	printf("before execute");
 	if (fork_proc((cmd->pipe_count) + 1, &child_num, pid, fd) != 0)
 		parent(cmd, fd, pid, exit_stat);
 	else

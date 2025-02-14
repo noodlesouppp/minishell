@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 20:23:20 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/14 02:04:58 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ t_cmd	*parse_cmd(char *line, int exit_stat, t_env *env)
 	}
 	token = check_path(token, exit_stat, env);
 	cmd = get_cmd_info(token, env);
-	printf("test %s\n", cmd->env->key);
 	free_tokens(token);
 	return (cmd);
 }

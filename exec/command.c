@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 20:35:25 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/14 02:03:19 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,18 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd, int *exit_stat)
 	char	*path;
 	t_cmd	*cur_cmd;
 
-	if (set_redirect(cmd, fd, child_num, exit_stat)) {
-		printf("redirection");
+	if (set_redirect(cmd, fd, child_num, exit_stat))
 		exit(EXIT_FAILURE);
-	}
 	cur_cmd = find_cur_cmd(cmd, child_num);
-	if (cur_cmd == NULL) {
-		printf("exiting");
+	if (cur_cmd == NULL)
 		exit(EXIT_SUCCESS);
-	}
 	free(set_fd(fd, cmd->pipe_count + 1, child_num));
-	if (!is_builtin(cur_cmd, child_num))
+	if (is_builtin(cur_cmd, child_num))
 	{
 		*exit_stat = builtin_controller(cur_cmd, fd, cmd->pipe_count + 1, child_num);
 		exit(*exit_stat);
 	}
 	path = find_path(cur_cmd, exit_stat);
-	printf("path: %s", path);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
 	if (execve(path, cur_cmd->input, env_to_array(cur_cmd)) == -1)
