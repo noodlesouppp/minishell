@@ -6,13 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 08:17:26 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	g_exit_stat = 0;
+volatile sig_atomic_t	g_exit_stat = 0;
 
 void	show_logo(void)
 {

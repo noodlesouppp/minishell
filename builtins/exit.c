@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 08:00:58 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 08:48:09 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	arg_check(t_cmd *cmd, int cnt)
 		{
 			ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
 			err_print(0, cmd->input[1], ": numeric argument required", 0);
-			return (255);
+			g_exit_stat = 255;
+			exit(g_exit_stat);
 		}
 	}
 	if (cnt > 2)
@@ -43,6 +44,6 @@ int	ft_exit(t_cmd *cmd)
 	if (cmd->pipe_count == 0)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
-		return ((unsigned char)ft_atoi(cmd->input[1]));
-	return (0);
+		g_exit_stat = ((unsigned char)ft_atoi(cmd->input[1]));
+	exit(g_exit_stat);
 }
