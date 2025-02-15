@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 08:48:09 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:05:16 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,21 @@ static int	arg_check(t_cmd *cmd, int cnt)
 	{
 		if (!ft_isdigit(cmd->input[1][i]) && cmd->input[1][i] != '-')
 		{
-			ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
-			err_print(0, cmd->input[1], ": numeric argument required", 0);
-			g_exit_stat = 255;
+			ft_putstr_fd("exit\n", STDERR_FILENO);
+			err_print("exit: ", cmd->input[1], ": numeric argument required", 2);
+			g_exit_stat = 2;
 			exit(g_exit_stat);
 		}
 	}
 	if (cnt > 2)
+	{
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 		return (err_print("exit: ", "too many arguments", NULL, 1));
+	}
 	return (0);
 }
+
+/* bash does modulo 256 for exit code */
 
 int	ft_exit(t_cmd *cmd)
 {
