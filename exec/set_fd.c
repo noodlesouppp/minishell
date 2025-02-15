@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:39:37 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 17:59:22 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:12:36 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	*set_fd(int **fd, int proc_cnt, int child_num)
 	return (std_fd);
 }
 
-int	set_redirect(t_cmd *cmd, int **fd, int child_num, int *exit_stat)
+int	set_redirect(t_cmd *cmd, int **fd, int child_num)
 {
 	int	*redir_fd;
 
-	redir_fd = get_redirect_fd(cmd, child_num, exit_stat);
+	redir_fd = get_redirect_fd(cmd, child_num);
 	if (redir_fd == NULL)
 		return (1);
 	if (redir_fd[0] > 0)

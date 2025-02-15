@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/14 02:05:21 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:06:46 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	unlink_file(t_cmd *cmd)
 	}
 }
 
-static void	parent(t_cmd *cmd, int **fd, pid_t *pid, int *exit_stat)
+static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 {
 	t_cmd	*tmp;
 	int		statloc;
@@ -51,8 +51,8 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid, int *exit_stat)
 	close_fd(fd, cmd->pipe_count + 1, -1);
 	while (++i < cmd->pipe_count + 1)
 		waitpid(pid[i], &statloc, 0);
-	if (*exit_stat == 0)
-		*exit_stat += (WEXITSTATUS(statloc));
+	if (g_exit_status == 0)
+		g_exit_status += (WEXITSTATUS(statloc));
 	proc_dealloc(fd, cmd, pid);
 }
 
@@ -92,7 +92,7 @@ void	proc_dealloc(int **fd, t_cmd *cmd, int *pid)
 	}
 }
 
-void	process(t_cmd *cmd, int *exit_stat)
+void	process(t_cmd *cmd)
 {
 	int		**fd;
 	int		child_num;
@@ -100,7 +100,7 @@ void	process(t_cmd *cmd, int *exit_stat)
 
 	set_echoctl(1);
 	child_num = -1;
-	if (heredoc(cmd, exit_stat))
+	if (heredoc(cmd))
 	{
 		proc_dealloc(NULL, cmd, NULL);
 		return ;
@@ -115,7 +115,7 @@ void	process(t_cmd *cmd, int *exit_stat)
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_count) + 1));
 	set_handler(quiet, quiet);
 	if (fork_proc((cmd->pipe_count) + 1, &child_num, pid, fd) != 0)
-		parent(cmd, fd, pid, exit_stat);
+		parent(cmd, fd, pid);
 	else
-		execute_cmd(cmd, child_num, fd, exit_stat);
+		execute_cmd(cmd, child_num, fd);
 }

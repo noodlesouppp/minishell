@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:24:09 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 19:59:46 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:01:03 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,4 @@ void	set_echoctl(int mode)
 	else
 		term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-//	printf("DEBUG: set_echoctl: %d\n", mode);
 }

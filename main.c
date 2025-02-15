@@ -6,11 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/14 02:09:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:19:53 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+int	g_exit_status = 0;
 
 void	show_logo(void)
 {
@@ -31,9 +33,7 @@ void	run_minishell(t_env *env)
 {
 	t_cmd	*cmd;
 	char	*line;
-	int		exit_stat;
 
-	exit_stat = 0;
 	while (1)
 	{
 		set_echoctl(0);
@@ -43,11 +43,11 @@ void	run_minishell(t_env *env)
 		{
 			if (line[0] != '\0')
 				add_history(line);
-			cmd = parse_cmd(line, exit_stat, env);
+			cmd = parse_cmd(line, env);
 			free(line);
 			line = NULL;
 			if (cmd)
-				process(cmd, &exit_stat);
+				process(cmd);
 		}
 		else
 		{

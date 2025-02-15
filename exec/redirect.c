@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:58:36 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 17:58:28 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:12:04 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	set_input(t_cmd *cmd, int *fd)
 		fd[0] = open(cmd->input[1], O_RDONLY);
 }
 
-int	*get_redirect_fd(t_cmd *cmd, int unit_cnt, int *exit_stat)
+int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 {
 	int			*fd;
 
@@ -51,7 +51,7 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt, int *exit_stat)
 			if (fd[0] < 0 || fd[1] < 0)
 			{
 				err_print(cmd->input[1], ": ", strerror(errno), 1);
-				*exit_stat = 1;
+				g_exit_status = 1;
 				free(fd);
 				return (NULL);
 			}

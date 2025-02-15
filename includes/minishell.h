@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 19:30:40 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:18:01 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_cmd
 	int				unit_count;
 	struct s_cmd	*next;
 	t_env			*env;
-	int				*exit_stat;
 }	t_cmd;
 
 void	run_minishell(t_env *env);

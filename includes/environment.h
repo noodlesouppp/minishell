@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:27:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 20:07:41 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:19:07 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 /*  key: name of environment variable (e.g., "PATH") 
 	value: value associated with the key (e.g., "/usr/bin:/bin") 
-	exit_stat: error no. of exit status 
 	next: pointer to next node	*/
 
 typedef struct s_cmd	t_cmd;

@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:14:52 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 19:17:44 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:02:34 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 	if $? returns exit status instead 
 	returns empty string when none found (like bash does) */
 
-char	*find_env(char *key, int exit_stat, t_env *env_head)
+char	*find_env(char *key, t_env *env_head)
 {
 	char	*env;
 
 	if (is_equal(key, "?"))
-		env = ft_itoa(exit_stat);
+		env = ft_itoa(g_exit_status);
 	else
 	{
 		if (get_env(key, env_head))
@@ -52,7 +52,7 @@ static int	find_key(char *start, char **key)
 	joins the variable value onto token string then appends the rest
 	returns the new index after expansion */
 
-int	expand_token(char **token, int dollar_idx, int exit_stat, t_env *env_head)
+int	expand_token(char **token, int dollar_idx, t_env *env_head)
 {
 	char	*key;
 	char	*env;
@@ -63,7 +63,7 @@ int	expand_token(char **token, int dollar_idx, int exit_stat, t_env *env_head)
 	len = find_key((*token) + dollar_idx + 1, &key);
 	if (len == 0)
 		return (dollar_idx + 1);
-	env = find_env(key, exit_stat, env_head);
+	env = find_env(key, env_head);
 	(*token)[dollar_idx] = '\0';
 	result = ft_strjoin(*token, env);
 	tmp = result;
@@ -81,7 +81,7 @@ int	expand_token(char **token, int dollar_idx, int exit_stat, t_env *env_head)
 	makes sure its not in squotes or if prev token is heredoc (<<)
 	adjusts index if expansion ends with $ or is empty */
 
-char	**check_path(char **token, int exit_stat, t_env *env)
+char	**check_path(char **token, t_env *env)
 {
 	int	i;
 	int	j;
@@ -97,7 +97,7 @@ char	**check_path(char **token, int exit_stat, t_env *env)
 			{
 				if (i > 0 && is_equal(token[i - 1], "<<"))
 					continue ;
-				j = expand_token(&token[i], j, exit_stat, env);
+				j = expand_token(&token[i], j, env);
 				if (token[i][j] == '\0' || token[i][j] == '$')
 					j--;
 			}

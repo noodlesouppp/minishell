@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/14 02:03:19 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:09:30 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 	return (cmd);
 }
 
-static char	**parse_path(char *cmd, int *exit_stat, t_env *env)
+static char	**parse_path(char *cmd, t_env *env)
 {
 	char	**parsed_path;
 	char	*tmp;
@@ -45,8 +45,8 @@ static char	**parse_path(char *cmd, int *exit_stat, t_env *env)
 	if (tmp == NULL)
 	{
 		err_print(cmd, ": No such file or directory", 0, 127);
-		*exit_stat = 127;
-		exit(*exit_stat);
+		g_exit_status = 127;
+		exit(g_exit_status);
 	}
 	parsed_path = ft_split(tmp, ':');
 	i = -1;
@@ -59,7 +59,7 @@ static char	**parse_path(char *cmd, int *exit_stat, t_env *env)
 	return (parsed_path);
 }
 
-char	*find_path(t_cmd *cmd, int *exit_stat)
+char	*find_path(t_cmd *cmd)
 {
 	char	**env_path;
 	char	*file_path;
@@ -70,7 +70,7 @@ char	*find_path(t_cmd *cmd, int *exit_stat)
 		printf("cmd input: %s", cmd->input[0]);
 		return (ft_strdup(cmd->input[0]));
 	}
-	env_path = parse_path(cmd->input[0], exit_stat, cmd->env);
+	env_path = parse_path(cmd->input[0], cmd->env);
 	while (ft_strlen(cmd->input[0]) && env_path && env_path[++i])
 	{
 		file_path = ft_strjoin(env_path[i], cmd->input[0]);
@@ -86,16 +86,16 @@ char	*find_path(t_cmd *cmd, int *exit_stat)
 	if (env_path)
 		path_dealloc(env_path);
 	err_print(cmd->input[0], ": command not found", 0, 127);
-	*exit_stat = 127;
+	g_exit_status = 127;
 	exit(EXIT_FAILURE);
 }
 
-void	execute_cmd(t_cmd *cmd, int child_num, int **fd, int *exit_stat)
+void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 {
 	char	*path;
 	t_cmd	*cur_cmd;
 
-	if (set_redirect(cmd, fd, child_num, exit_stat))
+	if (set_redirect(cmd, fd, child_num))
 		exit(EXIT_FAILURE);
 	cur_cmd = find_cur_cmd(cmd, child_num);
 	if (cur_cmd == NULL)
@@ -103,15 +103,15 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd, int *exit_stat)
 	free(set_fd(fd, cmd->pipe_count + 1, child_num));
 	if (is_builtin(cur_cmd, child_num))
 	{
-		*exit_stat = builtin_controller(cur_cmd, fd, cmd->pipe_count + 1, child_num);
-		exit(*exit_stat);
+		g_exit_status = builtin_controller(cur_cmd, fd, cmd->pipe_count + 1, child_num);
+		exit(g_exit_status);
 	}
-	path = find_path(cur_cmd, exit_stat);
+	path = find_path(cur_cmd);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
 	if (execve(path, cur_cmd->input, env_to_array(cur_cmd)) == -1)
 	{
-		*exit_stat = err_print(path, ": ", "is a directory", 126);
-		exit(*exit_stat);
+		g_exit_status = err_print(path, ": ", "is a directory", 126);
+		exit(g_exit_status);
 	}
 }

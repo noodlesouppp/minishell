@@ -6,13 +6,11 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 17:35:45 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:15:45 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
-
-// Add function to check for args
 
 static int	arg_check(t_cmd *cmd, int cnt)
 {

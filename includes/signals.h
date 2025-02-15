@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:24:38 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/14 04:19:29 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:00:34 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #  define ECHOCTL 0x00000040
 # endif
 
-volatile sig_atomic_t g_exit_status;
+extern int g_exit_status;
 
 /* signals.c */
 void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s));

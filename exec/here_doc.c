@@ -6,13 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 19:54:07 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:10:59 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
 
-static void	heredoc_expander(char **line, int exit_stat, t_env *env)
+static void	heredoc_expander(char **line, t_env *env)
 {
 	int	i;
 
@@ -21,14 +21,14 @@ static void	heredoc_expander(char **line, int exit_stat, t_env *env)
 	{
 		if ((*line)[i] == '$')
 		{
-			i = expand_token(line, i, exit_stat, env);
+			i = expand_token(line, i, env);
 			if ((*line)[i] == '$')
 				i--;
 		}
 	}
 }
 
-static void	get_input(int fd, char *limiter, int exit_stat, t_env *env)
+static void	get_input(int fd, char *limiter, t_env *env)
 {
 	char	*input;
 	char	*limiter_tmp;
@@ -44,13 +44,13 @@ static void	get_input(int fd, char *limiter, int exit_stat, t_env *env)
 			free(limiter_tmp);
 			return ;
 		}
-		heredoc_expander(&input, exit_stat, env);
+		heredoc_expander(&input, env);
 		ft_putstr_fd(input, fd);
 		free(input);
 	}
 }
 
-static void	heredoc_unit(t_cmd *cmd, int exit_stat)
+static void	heredoc_unit(t_cmd *cmd)
 {
 	char	*unit_cnt;
 	char	*file_name;
@@ -68,7 +68,7 @@ static void	heredoc_unit(t_cmd *cmd, int exit_stat)
 				err_print("heredoc: tmp_err", ": ", strerror(errno), 1);
 				break ;
 			}
-			get_input(fd, cmd->input[1], exit_stat, cmd->env);
+			get_input(fd, cmd->input[1], cmd->env);
 			close(fd);
 			free(unit_cnt);
 			free(file_name);
@@ -78,7 +78,7 @@ static void	heredoc_unit(t_cmd *cmd, int exit_stat)
 	exit(EXIT_SUCCESS);
 }
 
-int	heredoc(t_cmd *cmd, int *exit_stat)
+int	heredoc(t_cmd *cmd)
 {
 	pid_t	pid;
 	int		statloc;
@@ -96,9 +96,9 @@ int	heredoc(t_cmd *cmd, int *exit_stat)
 	else
 	{
 		set_handler(heredoc_sigint, NULL);
-		heredoc_unit(cmd, *exit_stat);
+		heredoc_unit(cmd);
 	}
-	if (*exit_stat == 0)
-		*exit_stat = WEXITSTATUS(statloc);
+	if (g_exit_status == 0)
+		g_exit_status = WEXITSTATUS(statloc);
 	return (WEXITSTATUS(statloc));
 }

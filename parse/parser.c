@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/14 02:04:58 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:17:37 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_cmd	*get_cmd_info(char **token, t_env *env)
 	return (head);
 }
 
-t_cmd	*parse_cmd(char *line, int exit_stat, t_env *env)
+t_cmd	*parse_cmd(char *line, t_env *env)
 {
 	t_cmd	*cmd;
 	char	**token;
@@ -140,7 +140,7 @@ t_cmd	*parse_cmd(char *line, int exit_stat, t_env *env)
 		free_tokens(token);
 		return (NULL);
 	}
-	token = check_path(token, exit_stat, env);
+	token = check_path(token, env);
 	cmd = get_cmd_info(token, env);
 	free_tokens(token);
 	return (cmd);
