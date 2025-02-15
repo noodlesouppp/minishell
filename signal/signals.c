@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:02:24 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 08:56:46 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_newline(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		printf("Quit: 3\n");
+		printf("Quit (core dumped)\n");
 		g_exit_stat = 131;
 	}
 	rl_on_new_line();
