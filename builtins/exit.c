@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:15:45 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 08:00:58 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	ft_exit(t_cmd *cmd)
 	if (cmd->pipe_count == 0)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
-		return((unsigned char)ft_atoi(cmd->input[1]));
+		return ((unsigned char)ft_atoi(cmd->input[1]));
 	return (0);
 }

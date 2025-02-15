@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:58:36 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:12:04 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 			if (fd[0] < 0 || fd[1] < 0)
 			{
 				err_print(cmd->input[1], ": ", strerror(errno), 1);
-				g_exit_status = 1;
+				g_exit_stat = 1;
 				free(fd);
 				return (NULL);
 			}

@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:17:37 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:30:37 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	init_type(t_cmd *cmd)
 {
 	int	cmd_flag;
-	
+
 	while (cmd)
 	{
 		cmd_flag = is_cmd(cmd->input[0], 0);

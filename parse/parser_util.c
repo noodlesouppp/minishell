@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 04:35:34 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 17:01:24 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:30:54 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ char	**ft_array_dup(char **arr, int len)
 	int		i;
 
 	i = 0;
-/*	if (!arr)
-	{
-		printf("DEBUG: ft_array_dup called with NULL\n");
-		return (NULL);
-	}*/
 	new = (char **)malloc(sizeof(char *) * (len + 1));
 	while (i < len)
 	{

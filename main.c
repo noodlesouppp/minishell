@@ -6,13 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:19:53 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	g_exit_status = 0;
+int	g_exit_stat = 0;
 
 void	show_logo(void)
 {
@@ -20,10 +20,14 @@ void	show_logo(void)
 	char	*line;
 
 	fd = open("utils/ascii.txt", O_RDONLY);
-	while ((line = get_next_line(fd)))
+	if (fd < 0)
+		return ;
+	line = get_next_line(fd);
+	while (line)
 	{
 		printf("%s", line);
 		free(line);
+		line = get_next_line(fd);
 	}
 	printf("\n");
 	close(fd);

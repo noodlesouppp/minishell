@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:14:52 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:02:34 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*find_env(char *key, t_env *env_head)
 	char	*env;
 
 	if (is_equal(key, "?"))
-		env = ft_itoa(g_exit_status);
+		env = ft_itoa(g_exit_stat);
 	else
 	{
 		if (get_env(key, env_head))

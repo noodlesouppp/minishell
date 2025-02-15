@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:27:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:19:07 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:51:33 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct s_cmd	t_cmd;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;

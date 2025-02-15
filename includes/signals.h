@@ -6,11 +6,11 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:24:38 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:00:34 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	SIGNALS_H
+#ifndef SIGNALS_H
 # define SIGNALS_H
 
 # include <signal.h>
@@ -28,7 +28,7 @@
 #  define ECHOCTL 0x00000040
 # endif
 
-extern int g_exit_status;
+extern int	g_exit_stat;
 
 /* signals.c */
 void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s));

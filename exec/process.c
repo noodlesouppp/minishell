@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:06:46 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 	close_fd(fd, cmd->pipe_count + 1, -1);
 	while (++i < cmd->pipe_count + 1)
 		waitpid(pid[i], &statloc, 0);
-	if (g_exit_status == 0)
-		g_exit_status += (WEXITSTATUS(statloc));
+	if (g_exit_stat == 0)
+		g_exit_stat += (WEXITSTATUS(statloc));
 	proc_dealloc(fd, cmd, pid);
 }
 
@@ -108,7 +108,7 @@ void	process(t_cmd *cmd)
 	fd = make_pipe(cmd);
 	if (cmd->pipe_count == 0 && is_builtin(cmd, 0))
 	{
-		builtin_controller(cmd, fd, 1, 0);
+		builtin_control(cmd, fd, 1, 0);
 		proc_dealloc(fd, cmd, NULL);
 		return ;
 	}

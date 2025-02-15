@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 11:41:21 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:18:36 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	exec_builtin(t_cmd *cmd)
 		return (1);
 }
 
-int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
+int	builtin_control(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 {
 	int		*std_fd;
 	t_cmd	*cur_cmd;
@@ -51,14 +51,14 @@ int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 		std_fd = set_fd(fd, proc_cnt, child_num);
 		set_handler(print_newline, print_newline);
 	}
-	g_exit_status = exec_builtin(cur_cmd);
+	g_exit_stat = exec_builtin(cur_cmd);
 	if (cmd->pipe_count == 0 && is_builtin(cur_cmd, child_num))
 	{
 		dup2(std_fd[0], STDIN_FILENO);
 		dup2(std_fd[1], STDOUT_FILENO);
 		free(std_fd);
 	}
-	return (g_exit_status);
+	return (g_exit_stat);
 }
 
 int	is_builtin(t_cmd *cmd, int child_num)

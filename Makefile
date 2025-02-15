@@ -6,7 +6,7 @@
 #    By: yousong <yousong@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/03 02:40:33 by yousong           #+#    #+#              #
-#    Updated: 2025/02/04 00:50:50 by yousong          ###   ########.fr        #
+#    Updated: 2025/02/15 07:48:03 by yousong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = $(PARSE_DIR)/parser.c \
        $(PARSE_DIR)/parse_error.c \
 	   $(PARSE_DIR)/parse_path.c \
 	   $(PARSE_DIR)/cmd_init.c \
+	   $(PARSE_DIR)/token_util.c \
 	   $(UTILS_DIR)/utils.c \
 	   $(ENV_DIR)/env_util.c \
 	   $(ENV_DIR)/env.c \

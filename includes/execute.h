@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:38:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:09:00 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:51:13 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ char	*find_path(t_cmd *cmd);
 t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num);
 
 /* here_doc.c */
-int	heredoc(t_cmd *cmd);
+int		heredoc(t_cmd *cmd);
 
 /* redirect.c */
-int	*get_redirect_fd(t_cmd *cmd, int unit_cnt);
+int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
 
 /* set_fd.c */
 int		**make_pipe(t_cmd *cmd);

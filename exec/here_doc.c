@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:10:59 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	heredoc(t_cmd *cmd)
 		set_handler(heredoc_sigint, NULL);
 		heredoc_unit(cmd);
 	}
-	if (g_exit_status == 0)
-		g_exit_status = WEXITSTATUS(statloc);
+	if (g_exit_stat == 0)
+		g_exit_stat = WEXITSTATUS(statloc);
 	return (WEXITSTATUS(statloc));
 }

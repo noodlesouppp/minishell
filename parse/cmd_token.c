@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 11:00:16 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/31 18:57:05 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:45:36 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,27 @@
 	ignores any special characters if inside quotes 
 	returns the start index of REMAINDER part of line */
 
-int	tokenise_cmd(char **token, char *line, int i, int *idx)
+int	tokenise_cmd(char **t, char *l, int pos, int *idx)
 {
-	int	start;
+	t_token	info;
+	int		type;
 
-	start = 0;
-	while (line[++i] != '\0')
+	info.t = t;
+	info.l = l;
+	info.i = idx;
+	info.s = 0;
+	while (l[++pos] != '\0')
 	{
-		if (!is_in_quote(line, i))
+		if (!is_in_quote(l, pos))
 		{
-			if (is_cmd(line, i) == D_REDIR)
-			{
-				if (i > 0)
-				{
-					token[(*idx)++] = ft_substr(line, start, i - start);
-					start = i;
-				}
-				token[(*idx)++] = ft_substr(line, i, 2);
-				i++;
-				start = i + 1;
-			}
-			else if (is_cmd(line, i) == PIPE || is_cmd(line, i) == REDIR)
-			{
-				if (i > 0)
-				{
-					token[(*idx)++] = ft_substr(line, start, i - start);
-					start = i;
-				}
-				token[(*idx)++] = ft_substr(line, i, 1);
-				start = i + 1;
-			}
+			type = is_cmd(l, pos);
+			if (type == D_REDIR)
+				handle_d_redir(&info, &pos);
+			else if (type == PIPE || type == REDIR)
+				handle_sp_cmd(&info, &pos);
 		}
 	}
-	return (start);
+	return (info.s);
 }
 
 /* adjusts total token count when encountering special characters

@@ -6,12 +6,12 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 21:42:18 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 19:31:09 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:57:32 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
 # include <stdio.h>
 # include <sys/errno.h>
@@ -20,7 +20,7 @@
 # include "minishell.h"
 # include "utils.h"
 
-int		builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num);
+int		builtin_control(t_cmd *cmd, int **fd, int proc_cnt, int child_num);
 int		is_builtin(t_cmd *cmd, int child_num);
 
 int		echo(t_cmd *cmd);
