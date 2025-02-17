@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:02:24 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 08:56:46 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:34:23 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	print_newline(int sig)
 {
 	if (sig == SIGINT)
 	{
+		usleep(1000);
 		printf("\n");
 		g_exit_stat = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
+		usleep(1000);
 		printf("Quit (core dumped)\n");
 		g_exit_stat = 131;
 	}
@@ -56,7 +58,7 @@ void	quiet(int sig)
 		g_exit_stat = 130;
 	else if (sig == SIGQUIT)
 		g_exit_stat = 131;
-	rl_replace_line("", 1);
+	// rl_replace_line("", 1);
 }
 
 void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s))

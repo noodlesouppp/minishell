@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 08:17:26 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:25:47 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	run_minishell(t_env *env)
 
 	while (1)
 	{
-		set_echoctl(0);
+		set_echoctl(1);
 		set_handler(print_prompt, NULL);
 		line = readline("minishell> ");
 		if (line)

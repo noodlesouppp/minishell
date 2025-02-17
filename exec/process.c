@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:49:02 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,45 @@ void	unlink_file(t_cmd *cmd)
 	}
 }
 
+static int	wait_for_child(t_cmd *cmd, pid_t *pid)
+{
+	int		statloc;
+	int		last_stat;
+	int		i;
+
+	last_stat = 0;
+	i = -1;
+	while (++i < cmd->pipe_count + 1)
+	{
+		waitpid(pid[i], &statloc, 0);
+		if (i == cmd->pipe_count)
+		{
+			if (WIFEXITED(statloc))
+				last_stat = WEXITSTATUS(statloc);
+			else if (WIFSIGNALED(statloc))
+				last_stat = 128 + WTERMSIG(statloc);
+		}
+	}
+	return (last_stat);
+}
+
 static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 {
 	t_cmd	*tmp;
-	int		statloc;
-	int		i;
+	int		last_stat;
 
 	tmp = cmd;
-	i = -1;
 	while (tmp)
 	{
-		if (is_minishell(cmd->input[0]))
+		if (is_minishell(tmp->input[0]))
 			break ;
 		tmp = tmp -> next;
 	}
 	if (tmp == NULL)
 		set_handler(print_newline, print_newline);
 	close_fd(fd, cmd->pipe_count + 1, -1);
-	while (++i < cmd->pipe_count + 1)
-		waitpid(pid[i], &statloc, 0);
-	if (g_exit_stat == 0)
-		g_exit_stat += (WEXITSTATUS(statloc));
+	last_stat = wait_for_child(cmd, pid);
+	g_exit_stat = last_stat;
 	proc_dealloc(fd, cmd, pid);
 }
 
