@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/17 13:09:10 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 01:20:49 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,22 @@ static void	get_input(int fd, char *limiter, t_env *env)
 	{
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		input = get_next_line(STDIN_FILENO);
-		if (!input || is_equal(limiter_tmp, input))
+		if (!input)
+		{
+			printf("\nminishell: warning: here-document delimited by"
+				" end-of-file (wanted `%s')\n", limiter);
+			break ;
+		}
+		if (is_equal(limiter_tmp, input))
 		{
 			free(input);
-			free(limiter_tmp);
-			return ;
+			break ;
 		}
 		heredoc_expander(&input, env);
 		ft_putstr_fd(input, fd);
 		free(input);
 	}
+	free(limiter_tmp);
 }
 
 static void	heredoc_unit(t_cmd *cmd)
@@ -89,16 +95,17 @@ int	heredoc(t_cmd *cmd)
 	{
 		set_handler(heredoc_quiet, NULL);
 		waitpid(pid, &statloc, 0);
-		if (WEXITSTATUS(statloc) != 0)
-			unlink_file(cmd);
+		if (WIFEXITED(statloc))
+			g_exit_stat = WEXITSTATUS(statloc);
+		else if (WIFSIGNALED(statloc))
+			g_exit_stat = 128 + WTERMSIG(statloc);
 		set_echoctl(1);
 	}
 	else
 	{
+		signal(SIGQUIT, SIG_IGN);
 		set_handler(heredoc_sigint, NULL);
 		heredoc_unit(cmd);
 	}
-	if (g_exit_stat == 0)
-		g_exit_stat = WEXITSTATUS(statloc);
-	return (WEXITSTATUS(statloc));
+	return (g_exit_stat);
 }

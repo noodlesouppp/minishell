@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:24:09 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/17 13:06:54 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:23:34 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	heredoc_quiet(int sig)
 void	heredoc_sigint(int sig)
 {
 	(void)sig;
-	printf("\n");
+	printf("^C\n");
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	exit(130);
