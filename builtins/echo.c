@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:47:28 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/04 00:22:53 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:07:43 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ int	echo(t_cmd *cmd)
 	flag = is_option(cmd->input[1]);
 	while (cmd->input[++i + flag])
 	{
-		printf("%s", cmd->input[i + flag]);
+		write(STDOUT_FILENO, cmd->input[i + flag],
+			ft_strlen(cmd->input[i + flag]));
 		if (cmd->input[i + flag + 1])
-			printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 	}
 	if (!flag)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }

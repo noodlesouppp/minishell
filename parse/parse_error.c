@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:49:04 by yousong           #+#    #+#             */
-/*   Updated: 2025/01/28 14:16:44 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:01:44 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	check_error(char **token)
 	{
 		if (is_cmd(*token, 0) == REDIR || is_cmd(*token, 0) == D_REDIR)
 		{
-			if (*(token + 1) == NULL || is_cmd(*(token + 1), 0) > 2)
+			if (*(token + 1) == NULL || ft_strlen(*(token + 1)) == 0
+				|| is_cmd(*(token + 1), 0) > 2)
 				return (print_error("syntax error near redirection"));
 		}
 		if (is_cmd(*token, 0) == PIPE)
