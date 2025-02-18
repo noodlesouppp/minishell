@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 08:39:16 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*find_path(t_cmd *cmd)
 		path_dealloc(env_path);
 	err_print(cmd->input[0], ": command not found", 0, 127);
 	g_exit_stat = 127;
-	exit(EXIT_FAILURE);
+	exit(g_exit_stat);
 }
 
 void	execute_cmd(t_cmd *cmd, int child, int **fd)
