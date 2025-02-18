@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:31:17 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:15:55 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:28:27 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,27 @@ static void	print_env(t_cmd *cmd)
 
 int	export(t_cmd *cmd)
 {
-	char	*str;
+	int		i;
 
-	str = cmd->input[1];
-	if (str)
+	if (!cmd->input[1])
 	{
-		if (!ft_isalpha(str[0]))
-		{
-			err_print("export: '", str, "': not a valid identifier", 1);
-			return (1);
-		}
-		if (add_env(str, &cmd->env) < 0)
-			return (1);
-	}
-	else
 		print_env(cmd);
-	return (0);
+		return (g_exit_stat);
+	}
+	i = 1;
+	while (cmd->input[i])
+	{
+		if (!ft_isalpha(cmd->input[i][0]))
+		{
+			err_print("export: '", cmd->input[i],
+				"': not a valid identifier", 1);
+			g_exit_stat = 1;
+		}
+		else if (add_env(cmd->input[i], &cmd->env) < 0)
+		{
+			g_exit_stat = 1;
+		}
+		i++;
+	}
+	return (g_exit_stat);
 }

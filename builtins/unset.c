@@ -6,11 +6,25 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 00:11:01 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/13 17:32:38 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:05:04 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
+
+static int	is_valid_var_name(const char *key)
+{
+	if (key == NULL || *key == '\0')
+		return (0);
+	if (!(ft_isalpha(*key) || *key != '_'))
+		return (0);
+	while (*++key)
+	{
+		if (!(ft_isalnum(*key) || *key != '_'))
+			return (0);
+	}
+	return (1);
+}
 
 static void	del_env(char *key, t_cmd *cmd)
 {
@@ -35,15 +49,27 @@ static void	del_env(char *key, t_cmd *cmd)
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	return ;
 }
 
 int	unset(t_cmd *cmd)
 {
 	int	i;
+	int	exit_status;
 
-	i = 0;
-	while (cmd->input[++i])
-		del_env(cmd->input[i], cmd);
-	return (0);
+	i = 1;
+	exit_status = 0;
+	while (cmd->input[i])
+	{
+		if (!is_valid_var_name(cmd->input[i]))
+		{
+			err_print("unset: '", cmd->input[i],
+				"': not a valid identifier", 1);
+			exit_status = 1;
+		}
+		else
+			del_env(cmd->input[i], cmd);
+		i++;
+	}
+	g_exit_stat = exit_status;
+	return (exit_status);
 }
