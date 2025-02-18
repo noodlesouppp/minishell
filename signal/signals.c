@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:02:24 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/17 11:34:23 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 04:45:25 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	quiet(int sig)
 		g_exit_stat = 130;
 	else if (sig == SIGQUIT)
 		g_exit_stat = 131;
-	// rl_replace_line("", 1);
 }
 
 void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s))
