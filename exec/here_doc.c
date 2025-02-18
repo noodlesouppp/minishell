@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/18 04:14:18 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 04:36:08 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@ static void	heredoc_expander(char **line, t_env *env)
 {
 	int	i;
 
-	i = -1;
-	while ((*line)[++i])
+	i = 0;
+	while ((*line)[i])
 	{
 		if ((*line)[i] == '$')
 		{
 			i = expand_token(line, i, env);
+			if (!(*line)[i])
+				break ;
 			if ((*line)[i] == '$')
 				i--;
 		}
+		else
+			i++;
 	}
 }
 
