@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/18 01:20:49 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/18 04:14:18 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,26 @@ static void	heredoc_expander(char **line, t_env *env)
 static void	get_input(int fd, char *limiter, t_env *env)
 {
 	char	*input;
-	char	*limiter_tmp;
 
-	limiter_tmp = ft_strjoin(limiter, "\n");
 	while (1)
 	{
-		ft_putstr_fd("> ", STDOUT_FILENO);
-		input = get_next_line(STDIN_FILENO);
+		input = readline("> ");
 		if (!input)
 		{
 			printf("\nminishell: warning: here-document delimited by"
 				" end-of-file (wanted `%s')\n", limiter);
 			break ;
 		}
-		if (is_equal(limiter_tmp, input))
+		if (ft_strncmp(input, limiter, ft_strlen(limiter) + 1) == 0)
 		{
 			free(input);
 			break ;
 		}
 		heredoc_expander(&input, env);
 		ft_putstr_fd(input, fd);
+		ft_putstr_fd("\n", fd);
 		free(input);
 	}
-	free(limiter_tmp);
 }
 
 static void	heredoc_unit(t_cmd *cmd)
