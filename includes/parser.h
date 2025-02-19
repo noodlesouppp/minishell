@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:55:03 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:08:51 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ t_cmd		*cmd_lstinit(void);
 /* token_util.c */
 void		handle_d_redir(t_token *info, int *pos);
 void		handle_sp_cmd(t_token *info, int *pos);
+char		**remove_empty(char **tokens);
 
 #endif

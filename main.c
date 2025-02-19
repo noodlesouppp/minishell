@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 11:00:05 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:07:48 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ void	run_minishell(t_env *env)
 			if (line[0] != '\0')
 				add_history(line);
 			cmd = parse_cmd(line, env);
-			if (cmd)
-			{
-				t_cmd	*tmp = cmd;
-				while (tmp)
-				{
-					printf("Parsed command segment:\n");
-					for (int i = 0; tmp->input[i]; i++) // Print each argument
-						printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
+			// if (cmd)
+			// {
+			// 	t_cmd	*tmp = cmd;
+			// 	while (tmp)
+			// 	{
+			// 		printf("Parsed command segment:\n");
+			// 		for (int i = 0; tmp->input[i]; i++) // Print each argument
+			// 			printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
 					
-					printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
-						tmp->type, tmp->pipe_count, tmp->unit_count);
+			// 		printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
+			// 			tmp->type, tmp->pipe_count, tmp->unit_count);
 
-					tmp = tmp->next;
-				}
-			}
+			// 		tmp = tmp->next;
+			// 	}
+			// }
 			free(line);
 			line = NULL;
 			if (cmd)

@@ -6,25 +6,22 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:56:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/03 23:52:42 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:12 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
 
-int	err_print(char *prefix, char *errmsg, char *postfix, int return_val)
+int	err_print(const char *prefix, const char *errmsg, char *postfix, int ret)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	if (prefix)
-		ft_putstr_fd(prefix, STDERR_FILENO);
-	if (errmsg)
-		ft_putstr_fd(errmsg, STDERR_FILENO);
-	else
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	if (postfix)
-		ft_putstr_fd(postfix, STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
-	return (return_val);
+    if (!prefix)
+        prefix = "";
+    if (!errmsg)
+        errmsg = strerror(errno);
+    if (!postfix)
+        postfix = "";
+    printf("minishell: %s%s%s\n", prefix, errmsg, postfix);
+	return (ret);
 }
 
 int	is_minishell(char *input)
