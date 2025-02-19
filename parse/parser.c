@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:30:37 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:31:03 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ t_cmd	*parse_cmd(char *line, t_env *env)
 	if (check_error(token) < 0)
 	{
 		free_tokens(token);
+		g_exit_stat = 2;
 		return (NULL);
 	}
 	token = check_path(token, env);
