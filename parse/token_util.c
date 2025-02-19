@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 07:32:27 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 16:31:05 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:40:59 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ char	**remove_empty(char **tokens)
 
 	count = count_nonempty(tokens);
 	new_tokens = copy_nonempty(tokens, count);
-	// free(tokens);
 	return (new_tokens);
 }

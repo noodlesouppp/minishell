@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:56:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 17:28:12 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:40:19 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	err_print(const char *prefix, const char *errmsg, char *postfix, int ret)
 {
-    if (!prefix)
-        prefix = "";
-    if (!errmsg)
-        errmsg = strerror(errno);
-    if (!postfix)
-        postfix = "";
-    printf("minishell: %s%s%s\n", prefix, errmsg, postfix);
+	if (!prefix)
+		prefix = "";
+	if (!errmsg)
+		errmsg = strerror(errno);
+	if (!postfix)
+		postfix = "";
+	printf("minishell: %s%s%s\n", prefix, errmsg, postfix);
 	return (ret);
 }
 
