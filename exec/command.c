@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 18:35:36 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 23:13:24 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,14 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 {
 	char	*path;
 	t_cmd	*cur_cmd;
+	int		redir_error;
 
-	if (set_redirect(cmd, fd, child))
-		exit(EXIT_FAILURE);
+	redir_error = set_redirect(cmd, fd, child);
 	cur_cmd = find_cur_cmd(cmd, child);
 	if (cur_cmd == NULL)
 		exit(EXIT_SUCCESS);
+	if (redir_error)
+		exit(EXIT_FAILURE);
 	free(set_fd(fd, cmd->pipe_count + 1, child));
 	if (is_builtin(cur_cmd, child))
 	{

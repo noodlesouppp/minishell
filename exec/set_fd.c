@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:39:37 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 18:53:54 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 22:46:51 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	set_redirect(t_cmd *cmd, int **fd, int child_num)
 	if (redir_fd == NULL)
 	{
 		g_exit_stat = 1;
-		return (0);
+		return (1);
 	}
 	if (redir_fd[0] > 0)
 	{

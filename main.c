@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 17:07:48 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/19 23:31:21 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,6 @@ void	run_minishell(t_env *env)
 			if (line[0] != '\0')
 				add_history(line);
 			cmd = parse_cmd(line, env);
-			// if (cmd)
-			// {
-			// 	t_cmd	*tmp = cmd;
-			// 	while (tmp)
-			// 	{
-			// 		printf("Parsed command segment:\n");
-			// 		for (int i = 0; tmp->input[i]; i++) // Print each argument
-			// 			printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
-					
-			// 		printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
-			// 			tmp->type, tmp->pipe_count, tmp->unit_count);
-
-			// 		tmp = tmp->next;
-			// 	}
-			// }
 			free(line);
 			line = NULL;
 			if (cmd)
@@ -89,3 +74,17 @@ int	main(int argc, char **argv, char **envp)
 	free_envlist(env);
 	return (0);
 }
+
+// void print_cmd(t_cmd *cmd)
+// {
+// 	t_cmd	*tmp = cmd;
+// 	while (tmp)
+// 	{
+// 		printf("Parsed command segment:\n");
+// 		for (int i = 0; tmp->input[i]; i++)
+// 			printf("  Arg[%d]: \"%s\"\n", i, tmp->input[i]);
+// 		printf("  Type: %d | Pipe Count: %d | Unit Count: %d\n",
+// 		tmp->type, tmp->pipe_count, tmp->unit_count);
+// 		tmp = tmp->next;
+// 	}
+// }
