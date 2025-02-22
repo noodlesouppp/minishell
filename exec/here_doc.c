@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 21:28:39 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:38:50 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ static void	get_input(int fd, char *limiter, t_env *env)
 	}
 }
 
+/* O_RDWR: open for reading and writing
+	O_TRUNC: if file exists, truncate to zero len (safety)
+	O_CREAT: create file if not exist 
+	mod 777 makes all users read write exec */
+
 static void	heredoc_unit(t_cmd *cmd)
 {
 	char	*unit_cnt;
@@ -124,7 +129,6 @@ int	heredoc(t_cmd *cmd)
 	}
 	else
 	{
-		signal(SIGQUIT, SIG_IGN);
 		set_handler(heredoc_sigint, NULL);
 		heredoc_unit(cmd);
 	}

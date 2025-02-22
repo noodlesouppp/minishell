@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 23:13:24 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 11:31:13 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ static void	path_dealloc(char **env_path)
 		free(env_path[i]);
 	free(env_path);
 }
+
+/* first reaches the cmd for the current child
+	then looks for cmd node with word type 
+	return that cmd node */
 
 t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 {

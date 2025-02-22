@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:02:24 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/18 13:51:04 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 13:14:58 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,6 @@ void	print_prompt(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	rl_redisplay();
-}
-
-void	set_signal(int sigint, int sigquit)
-{
-	if (sigint == DFL)
-		signal(SIGINT, SIG_DFL);
-	else if (sigint == IGN)
-		signal(SIGINT, SIG_IGN);
-	if (sigquit == DFL)
-		signal(SIGQUIT, SIG_DFL);
-	else if (sigquit == IGN)
-		signal(SIGQUIT, SIG_IGN);
 }
 
 void	print_newline(int sig)

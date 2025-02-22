@@ -6,13 +6,28 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:51:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 23:31:21 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/22 15:37:48 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 volatile sig_atomic_t	g_exit_stat = 0;
+
+void	free_cmd_list(t_cmd *head)
+{
+	t_cmd	*current;
+	t_cmd	*next;
+
+	current = head;
+	while (current)
+	{
+		next = current->next;
+		free_tokens(current->input);
+		free(current);
+		current = next;
+	}
+}
 
 void	show_logo(void)
 {
@@ -50,8 +65,11 @@ void	run_minishell(t_env *env)
 			cmd = parse_cmd(line, env);
 			free(line);
 			line = NULL;
-			if (cmd)
+			if (cmd) {
 				process(cmd);
+				proc_dealloc(NULL, cmd, NULL);
+				printf("dealloc\n");
+			}
 		}
 		else
 		{

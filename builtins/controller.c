@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 11:41:21 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 13:26:52 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	exec_builtin(t_cmd *cmd)
 	else
 		return (1);
 }
+
+/* if no pipes, builtin is executed in parent process, so manual fd is required */
 
 int	builtin_control(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 {

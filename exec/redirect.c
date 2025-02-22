@@ -6,11 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:58:36 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 12:31:44 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
+
+/* mod 644 means you can read and write, and only others can read */
 
 static void	set_output(t_cmd *cmd, int *fd)
 {
@@ -37,9 +39,11 @@ static void	set_input(t_cmd *cmd, int *fd)
 		fd[0] = open(cmd->input[1], O_RDONLY);
 }
 
+/* scans cmds to find and process all redir operators */
+
 int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 {
-	int			*fd;
+	int	*fd;
 
 	fd = ft_calloc(2, sizeof(int));
 	while (cmd)

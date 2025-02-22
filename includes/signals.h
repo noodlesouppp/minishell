@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 00:24:38 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 08:16:43 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 13:14:53 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 
 # include "minishell.h"
 
-# define DFL 0
-# define IGN 1
-
 # ifndef ECHOCTL
 #  define ECHOCTL 0x00000040
 # endif
@@ -34,7 +31,6 @@ extern volatile sig_atomic_t	g_exit_stat;
 void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s));
 void	quiet(int sig);
 void	print_newline(int sig);
-void	set_signal(int sigint, int sigquit);
 void	print_prompt(int sig);
 
 /* signal_util.c */

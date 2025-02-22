@@ -6,12 +6,18 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:39:37 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 22:46:51 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/20 13:02:19 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/execute.h"
+
+/* loops through all process fds 
+	skips stdin and stdout
+	if current child proc, close only write end 
+	if next proc, close only read end 
+	otherwise close all other read write ends (child proc doesnt need them) */
 
 void	close_fd(int **fd, int proc_cnt, int child_num)
 {
@@ -23,13 +29,9 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 		if (fd[i][1] == STDOUT_FILENO || fd[i][0] == STDIN_FILENO)
 			continue ;
 		if (i == child_num)
-		{
 			close(fd[i][1]);
-		}
 		else if (i == child_num + 1)
-		{
 			close(fd[i][0]);
-		}
 		else
 		{
 			close(fd[i][1]);
@@ -50,6 +52,11 @@ int	*set_fd(int **fd, int proc_cnt, int child_num)
 	dup2(fd[child_num + 1][1], STDOUT_FILENO);
 	return (std_fd);
 }
+
+/* updates fds used for piping to reflect the redirs 
+	if input redir is specified, update pipe input 
+	if output redir is specified, update pipe output
+	if multiple redirs, close previous one */
 
 int	set_redirect(t_cmd *cmd, int **fd, int child_num)
 {
@@ -76,6 +83,10 @@ int	set_redirect(t_cmd *cmd, int **fd, int child_num)
 	free(redir_fd);
 	return (0);
 }
+
+/* we need to malloc +2 for stdin and stdout pipes 
+	for first pipe, we replace read end with stdin
+	for last pipe, we replace write end with stdout */
 
 int	**make_pipe(t_cmd *cmd)
 {

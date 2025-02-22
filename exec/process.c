@@ -6,11 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 18:42:29 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/22 15:36:25 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
+
+/* makes sure only exit stat of last command is returned */
 
 static int	wait_for_child(t_cmd *cmd, pid_t *pid)
 {
@@ -52,6 +54,7 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 	last_stat = wait_for_child(cmd, pid);
 	g_exit_stat = last_stat;
 	proc_dealloc(fd, cmd, pid);
+	printf("parent dealloc success\n");
 }
 
 static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
@@ -62,6 +65,12 @@ static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
 	pid[*child_num] = fork();
 	return (fork_proc(proc_cnt, child_num, pid, fd));
 }
+
+/* frees all command resources 
+	removes temp heredoc files
+	frees pid if exists
+	free each element of pipe array and then the array
+	then frees the whole cmd node */
 
 void	proc_dealloc(int **fd, t_cmd *cmd, int *pid)
 {
@@ -101,13 +110,15 @@ void	process(t_cmd *cmd)
 	if (heredoc(cmd))
 	{
 		proc_dealloc(NULL, cmd, NULL);
+		printf("heredoc dealloc success\n");
 		return ;
 	}
 	fd = make_pipe(cmd);
 	if (cmd->pipe_count == 0 && is_builtin(cmd, 0))
 	{
 		builtin_control(cmd, fd, 1, 0);
-		proc_dealloc(fd, cmd, NULL);
+		// proc_dealloc(fd, NULL, NULL);
+		printf("parent builtin dealloc in main\n");
 		return ;
 	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_count) + 1));
