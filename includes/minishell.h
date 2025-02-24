@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/22 02:21:31 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/15 07:18:01 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ typedef struct s_cmd
 
 void	run_minishell(t_env *env);
 void	show_logo(void);
-void	free_cmd_list(t_cmd *head);
 
 #endif

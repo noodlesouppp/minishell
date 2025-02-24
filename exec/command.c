@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/20 11:31:13 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:23:55 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 	if (is_builtin(cur_cmd, child))
 	{
 		g_exit_stat = builtin_control(cur_cmd, fd, cmd->pipe_count + 1, child);
+		free_envlist(cmd->env);
+		proc_dealloc(fd, cmd, NULL, 1);
 		exit(g_exit_stat);
 	}
 	path = find_path(cur_cmd);
@@ -115,6 +117,8 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 	if (execve(path, cur_cmd->input, env_to_array(cur_cmd)) == -1)
 	{
 		g_exit_stat = err_print(path, ": ", "is a directory", 126);
+		free_envlist(cmd->env);
+		proc_dealloc(fd, cmd, NULL, 1);
 		exit(g_exit_stat);
 	}
 }

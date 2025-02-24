@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:56:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 21:40:19 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/24 16:36:00 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_minishell(char *input)
 	length = ft_strlen(input);
 	if (length >= 9)
 	{
-		return (ft_memcmp(input + length - 10, "minishell", 10));
+		return (ft_memcmp(input + length - 9, "minishell", 9));
 	}
 	return (0);
 }

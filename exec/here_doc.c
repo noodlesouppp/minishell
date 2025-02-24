@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/20 10:38:50 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:39:23 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	heredoc_unit(t_cmd *cmd)
 	char	*unit_cnt;
 	char	*file_name;
 	int		fd;
+	t_cmd	*head = cmd;
 
 	while (cmd)
 	{
@@ -107,6 +108,8 @@ static void	heredoc_unit(t_cmd *cmd)
 		}
 		cmd = cmd->next;
 	}
+	free_envlist(head->env);
+	proc_dealloc(NULL, head, NULL, 0);
 	exit(EXIT_SUCCESS);
 }
 

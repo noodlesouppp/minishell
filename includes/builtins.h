@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 21:42:18 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:57:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:07:14 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int		export(t_cmd *cmd);
 int		pwd(void);
 int		cd(t_cmd *cmd);
 int		unset(t_cmd *cmd);
-int		ft_exit(t_cmd *cmd);
+int		ft_exit(t_cmd *cmd, int **fd);
 
 #endif

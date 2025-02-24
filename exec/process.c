@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/22 15:36:25 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/24 21:44:26 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 	close_fd(fd, cmd->pipe_count + 1, -1);
 	last_stat = wait_for_child(cmd, pid);
 	g_exit_stat = last_stat;
-	proc_dealloc(fd, cmd, pid);
-	printf("parent dealloc success\n");
+	proc_dealloc(fd, cmd, pid, 1);
 }
 
 static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
@@ -72,7 +71,7 @@ static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
 	free each element of pipe array and then the array
 	then frees the whole cmd node */
 
-void	proc_dealloc(int **fd, t_cmd *cmd, int *pid)
+void	proc_dealloc(int **fd, t_cmd *cmd, int *pid, int unlink)
 {
 	int		i;
 	int		cnt;
@@ -80,7 +79,8 @@ void	proc_dealloc(int **fd, t_cmd *cmd, int *pid)
 
 	cnt = cmd->pipe_count + 1;
 	i = -1;
-	unlink_file(cmd);
+	if (unlink)
+		unlink_file(cmd);
 	if (pid)
 		free(pid);
 	while (fd && ++i < cnt + 1)
@@ -109,16 +109,14 @@ void	process(t_cmd *cmd)
 	child_num = -1;
 	if (heredoc(cmd))
 	{
-		proc_dealloc(NULL, cmd, NULL);
-		printf("heredoc dealloc success\n");
+		proc_dealloc(NULL, cmd, NULL, 0);
 		return ;
 	}
 	fd = make_pipe(cmd);
 	if (cmd->pipe_count == 0 && is_builtin(cmd, 0))
 	{
 		builtin_control(cmd, fd, 1, 0);
-		// proc_dealloc(fd, NULL, NULL);
-		printf("parent builtin dealloc in main\n");
+		proc_dealloc(fd, cmd, NULL, 1);
 		return ;
 	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_count) + 1));
@@ -126,5 +124,8 @@ void	process(t_cmd *cmd)
 	if (fork_proc((cmd->pipe_count) + 1, &child_num, pid, fd) != 0)
 		parent(cmd, fd, pid);
 	else
+	{
+		free(pid);
 		execute_cmd(cmd, child_num, fd);
+	}
 }

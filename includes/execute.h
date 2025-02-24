@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:38:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:51:13 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:23:17 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_cmd	t_cmd;
 /* process.c */
 void	process(t_cmd *cmd);
 void	unlink_file(t_cmd *cmd);
-void	proc_dealloc(int **fd, t_cmd *cmd, int *pid);
+void	proc_dealloc(int **fd, t_cmd *cmd, int *pid, int unlink);
 
 /* command.c */
 void	execute_cmd(t_cmd *cmd, int child_num, int **fd);
