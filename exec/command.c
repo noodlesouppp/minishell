@@ -6,13 +6,13 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 04:08:25 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 04:32:45 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
 
-static char	**parse_path(char *cmd, t_env *env)
+static char	**parse_path(char *input, t_env *env, t_cmd *cmd, int **fd)
 {
 	char	**parsed_path;
 	char	*tmp;
@@ -21,8 +21,9 @@ static char	**parse_path(char *cmd, t_env *env)
 	tmp = get_env("PATH", env);
 	if (tmp == NULL)
 	{
-		err_print(cmd, ": No such file or directory", 0, 127);
-		g_exit_stat = 127;
+		g_exit_stat = err_print(input, ": No such file or directory", 0, 127);
+		free_envlist(env);
+		proc_dealloc(fd, cmd, NULL, 1);
 		exit(g_exit_stat);
 	}
 	parsed_path = ft_split(tmp, ':');
@@ -45,7 +46,7 @@ char	*find_path(t_cmd *cmd, int **fd)
 	i = -1;
 	if (access(cmd->input[0], R_OK | X_OK) == 0)
 		return (ft_strdup(cmd->input[0]));
-	env_path = parse_path(cmd->input[0], cmd->env);
+	env_path = parse_path(cmd->input[0], cmd->env, cmd, fd);
 	while (ft_strlen(cmd->input[0]) && env_path && env_path[++i])
 	{
 		file_path = ft_strjoin(env_path[i], cmd->input[0]);
