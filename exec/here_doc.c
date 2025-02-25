@@ -6,31 +6,11 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 01:03:44 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 02:11:47 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
-
-void	unlink_file(t_cmd *cmd)
-{
-	int		cnt;
-	int		i;
-	char	*unit_cnt;
-	char	*file_name;
-
-	cnt = cmd->pipe_count + 1;
-	i = -1;
-	while (++i < cnt)
-	{
-		unit_cnt = ft_itoa(i);
-		file_name = ft_strjoin(".heredoc_tmp", unit_cnt);
-		if (access(file_name, F_OK) == 0)
-			unlink(file_name);
-		free(unit_cnt);
-		free(file_name);
-	}
-}
 
 static void	heredoc_expander(char **line, t_env *env)
 {
@@ -82,31 +62,37 @@ static void	get_input(int fd, char *limiter, t_env *env)
 	O_CREAT: create file if not exist 
 	mod 777 makes all users read write exec */
 
-static void	heredoc_unit(t_cmd *cmd)
+static void	process_heredoc(t_cmd *cmd)
 {
 	char	*unit_cnt;
 	char	*file_name;
 	int		fd;
+
+	unit_cnt = ft_itoa(cmd->unit_count);
+	file_name = ft_strjoin(".heredoc_tmp", unit_cnt);
+	fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0777);
+	if (fd < 0)
+	{
+		err_print("heredoc: tmp_err", ": ", strerror(errno), 1);
+		free(unit_cnt);
+		free(file_name);
+		return ;
+	}
+	get_input(fd, cmd->input[1], cmd->env);
+	close(fd);
+	free(unit_cnt);
+	free(file_name);
+}
+
+static void	heredoc_init(t_cmd *cmd)
+{
 	t_cmd	*head;
 
 	head = cmd;
 	while (cmd)
 	{
 		if (cmd->type == redirect && is_equal(cmd->input[0], "<<"))
-		{
-			unit_cnt = ft_itoa(cmd->unit_count);
-			file_name = ft_strjoin(".heredoc_tmp", unit_cnt);
-			fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0777);
-			if (fd < 0)
-			{
-				err_print("heredoc: tmp_err", ": ", strerror(errno), 1);
-				break ;
-			}
-			get_input(fd, cmd->input[1], cmd->env);
-			close(fd);
-			free(unit_cnt);
-			free(file_name);
-		}
+			process_heredoc(cmd);
 		cmd = cmd->next;
 	}
 	free_envlist(head->env);
@@ -134,7 +120,7 @@ int	heredoc(t_cmd *cmd)
 	else
 	{
 		set_handler(heredoc_sigint, NULL);
-		heredoc_unit(cmd);
+		heredoc_init(cmd);
 	}
 	return (g_exit_stat);
 }

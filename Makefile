@@ -6,7 +6,7 @@
 #    By: yousong <yousong@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/03 02:40:33 by yousong           #+#    #+#              #
-#    Updated: 2025/02/15 07:48:03 by yousong          ###   ########.fr        #
+#    Updated: 2025/02/25 03:09:32 by yousong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS = $(PARSE_DIR)/parser.c \
 	   $(EXEC_DIR)/here_doc.c \
 	   $(EXEC_DIR)/set_fd.c \
 	   $(EXEC_DIR)/redirect.c \
+	   $(EXEC_DIR)/exec_util.c \
 	   $(BUILTINS_DIR)/cd.c \
 	   $(BUILTINS_DIR)/controller.c \
 	   $(BUILTINS_DIR)/echo.c \

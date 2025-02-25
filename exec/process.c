@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/24 21:44:26 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 03:08:33 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,37 +65,14 @@ static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
 	return (fork_proc(proc_cnt, child_num, pid, fd));
 }
 
-/* frees all command resources 
-	removes temp heredoc files
-	frees pid if exists
-	free each element of pipe array and then the array
-	then frees the whole cmd node */
-
-void	proc_dealloc(int **fd, t_cmd *cmd, int *pid, int unlink)
+static void	process_fork(t_cmd *cmd, int *child_num, pid_t *pid, int **fd)
 {
-	int		i;
-	int		cnt;
-	t_cmd	*tmp;
-
-	cnt = cmd->pipe_count + 1;
-	i = -1;
-	if (unlink)
-		unlink_file(cmd);
-	if (pid)
-		free(pid);
-	while (fd && ++i < cnt + 1)
-		free(fd[i]);
-	if (fd)
-		free(fd);
-	while (cmd)
+	if (fork_proc((cmd->pipe_count) + 1, child_num, pid, fd) != 0)
+		parent(cmd, fd, pid);
+	else
 	{
-		i = -1;
-		tmp = cmd->next;
-		while (cmd->input[++i])
-			free(cmd->input[i]);
-		free(cmd->input);
-		free(cmd);
-		cmd = tmp;
+		free(pid);
+		execute_cmd(cmd, *child_num, fd);
 	}
 }
 
@@ -121,11 +98,5 @@ void	process(t_cmd *cmd)
 	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_count) + 1));
 	set_handler(quiet, quiet);
-	if (fork_proc((cmd->pipe_count) + 1, &child_num, pid, fd) != 0)
-		parent(cmd, fd, pid);
-	else
-	{
-		free(pid);
-		execute_cmd(cmd, child_num, fd);
-	}
+	process_fork(cmd, &child_num, pid, fd);
 }

@@ -6,38 +6,11 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 00:41:40 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 03:39:41 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
-
-static void	path_dealloc(char **env_path)
-{
-	int	i;
-
-	i = -1;
-	while (env_path[++i])
-		free(env_path[i]);
-	free(env_path);
-}
-
-/* first reaches the cmd for the current child
-	then looks for cmd node with word type 
-	return that cmd node */
-
-t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
-{
-	while (cmd->unit_count < child_num)
-		cmd = cmd->next;
-	while (cmd && cmd->type != word)
-	{
-		if (cmd->unit_count > child_num)
-			return (NULL);
-		cmd = cmd->next;
-	}
-	return (cmd);
-}
 
 static char	**parse_path(char *cmd, t_env *env)
 {
@@ -63,7 +36,7 @@ static char	**parse_path(char *cmd, t_env *env)
 	return (parsed_path);
 }
 
-char	*find_path(t_cmd *cmd)
+char	*find_path(t_cmd *cmd, int **fd)
 {
 	char	**env_path;
 	char	*file_path;
@@ -86,8 +59,25 @@ char	*find_path(t_cmd *cmd)
 	}
 	if (env_path)
 		path_dealloc(env_path);
-	err_print(cmd->input[0], ": command not found", 0, 127);
-	g_exit_stat = 127;
+	g_exit_stat = err_print(cmd->input[0], ": command not found", 0, 127);
+	free_envlist(cmd->env);
+	proc_dealloc(fd, cmd, NULL, 1);
+	exit(g_exit_stat);
+}
+
+static void	exec_error(t_cmd *cmd, int **fd, char *path)
+{
+	g_exit_stat = err_print(path, ": ", "is a directory", 126);
+	free_envlist(cmd->env);
+	proc_dealloc(fd, cmd, NULL, 1);
+	exit(g_exit_stat);
+}
+
+static void	run_builtin(t_cmd *cur_cmd, t_cmd *cmd, int child, int **fd)
+{
+	g_exit_stat = builtin_control(cur_cmd, fd, cmd->pipe_count + 1, child);
+	free_envlist(cmd->env);
+	proc_dealloc(fd, cmd, NULL, 1);
 	exit(g_exit_stat);
 }
 
@@ -107,20 +97,10 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 	}
 	free(set_fd(fd, cmd->pipe_count + 1, child));
 	if (is_builtin(cur_cmd, child))
-	{
-		g_exit_stat = builtin_control(cur_cmd, fd, cmd->pipe_count + 1, child);
-		free_envlist(cmd->env);
-		proc_dealloc(fd, cmd, NULL, 1);
-		exit(g_exit_stat);
-	}
-	path = find_path(cur_cmd);
+		run_builtin(cur_cmd, cmd, child, fd);
+	path = find_path(cur_cmd, fd);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
 	if (execve(path, cur_cmd->input, env_to_array(cur_cmd)) == -1)
-	{
-		g_exit_stat = err_print(path, ": ", "is a directory", 126);
-		free_envlist(cmd->env);
-		proc_dealloc(fd, cmd, NULL, 1);
-		exit(g_exit_stat);
-	}
+		exec_error(cmd, fd, path);
 }
