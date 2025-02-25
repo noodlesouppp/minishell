@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 03:39:41 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 03:55:09 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	exec_error(t_cmd *cmd, int **fd, char *path)
 	g_exit_stat = err_print(path, ": ", "is a directory", 126);
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
+	path_dealloc(&path);
 	exit(g_exit_stat);
 }
 
