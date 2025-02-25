@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 03:55:09 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 04:08:25 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	exec_error(t_cmd *cmd, int **fd, char *path)
 	g_exit_stat = err_print(path, ": ", "is a directory", 126);
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
-	path_dealloc(&path);
+	free(path);
 	exit(g_exit_stat);
 }
 
@@ -87,6 +87,7 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 	char	*path;
 	t_cmd	*cur_cmd;
 	int		redir_error;
+	char	**env_array;
 
 	redir_error = set_redirect(cmd, fd, child);
 	cur_cmd = find_cur_cmd(cmd, child);
@@ -102,6 +103,10 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 	path = find_path(cur_cmd, fd);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
-	if (execve(path, cur_cmd->input, env_to_array(cur_cmd)) == -1)
+	env_array = env_to_array(cur_cmd);
+	if (execve(path, cur_cmd->input, env_array) == -1)
+	{
+		path_dealloc(env_array);
 		exec_error(cmd, fd, path);
+	}
 }
