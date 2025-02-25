@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/24 15:39:23 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 01:03:44 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ static void	heredoc_unit(t_cmd *cmd)
 	char	*unit_cnt;
 	char	*file_name;
 	int		fd;
-	t_cmd	*head = cmd;
+	t_cmd	*head;
 
+	head = cmd;
 	while (cmd)
 	{
 		if (cmd->type == redirect && is_equal(cmd->input[0], "<<"))

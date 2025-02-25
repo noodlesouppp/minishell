@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/24 21:39:56 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 00:55:34 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ static int	arg_check(t_cmd *cmd, int cnt, int **fd)
 int	ft_exit(t_cmd *cmd, int **fd)
 {
 	int	cnt;
-	// int	exit_pipe;
 
 	cnt = 0;
-	// exit_pipe = cmd->pipe_count;
 	while (cmd->input[cnt])
 		cnt++;
 	if (arg_check(cmd, cnt, fd))
@@ -56,7 +54,6 @@ int	ft_exit(t_cmd *cmd, int **fd)
 		g_exit_stat = ((unsigned char)ft_atoi(cmd->input[1]));
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 0);
-	// if (exit_pipe == 0)
-		exit(g_exit_stat);
+	exit(g_exit_stat);
 	return (0);
 }
