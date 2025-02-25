@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:40:46 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:18:01 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 20:48:34 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@
 # include "execute.h"
 # include "builtins.h"
 
-enum	e_str_type {word, pipeline, redirect};
+enum	e_str_type
+{
+	word,
+	pipeline,
+	redirect
+};
 
 typedef struct s_cmd
 {
