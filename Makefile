@@ -6,7 +6,7 @@
 #    By: yousong <yousong@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/03 02:40:33 by yousong           #+#    #+#              #
-#    Updated: 2025/02/25 03:09:32 by yousong          ###   ########.fr        #
+#    Updated: 2025/02/25 22:53:26 by yousong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ GNL_OBJS = $(GNL_SRC:%.c=%.o)
 MAIN = main.c
 MAIN_OBJ = $(MAIN:.c=.o)
 
-DEBUG_FLAGS = -g3 -gdwarf-3 -fsanitize=address -fsanitize=undefined
+DEBUG_FLAGS = -g3 -gdwarf-3
 ifdef DEBUG
 	CFLAGS = -Wall -Wextra -Werror $(DEBUG_FLAGS)
 else

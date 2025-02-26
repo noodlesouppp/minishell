@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:39:37 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/20 13:02:19 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/26 00:33:42 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 	int	i;
 
 	i = -1;
-	while (++i <= proc_cnt)
+	while (++i < proc_cnt)
 	{
 		if (fd[i][1] == STDOUT_FILENO || fd[i][0] == STDIN_FILENO)
 			continue ;
@@ -40,16 +40,21 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 	}
 }
 
-int	*set_fd(int **fd, int proc_cnt, int child_num)
+void	set_fd(int **fd, int proc_cnt, int child_num)
+{
+	close_fd(fd, proc_cnt, child_num);
+	dup2(fd[child_num][0], STDIN_FILENO);
+	dup2(fd[child_num + 1][1], STDOUT_FILENO);
+}
+
+int	*set_fd_builtin(int **fd, int proc_cnt, int child_num)
 {
 	int	*std_fd;
 
 	std_fd = malloc(sizeof(int) * 2);
 	std_fd[0] = dup(STDIN_FILENO);
 	std_fd[1] = dup(STDOUT_FILENO);
-	close_fd(fd, proc_cnt, child_num);
-	dup2(fd[child_num][0], STDIN_FILENO);
-	dup2(fd[child_num + 1][1], STDOUT_FILENO);
+	set_fd(fd, proc_cnt, child_num);
 	return (std_fd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:38:05 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 03:40:12 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/26 00:31:17 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
 /* set_fd.c */
 int		**make_pipe(t_cmd *cmd);
 int		set_redirect(t_cmd *cmd, int **fd, int child_num);
-int		*set_fd(int **fd, int proc_cnt, int child_num);
+int		*set_fd_builtin(int **fd, int proc_cnt, int child_num);
 void	close_fd(int **fd, int proc_cnt, int child_num);
+void	set_fd(int **fd, int proc_cnt, int child_num);
 
 /* exec_util.c */
 void	proc_dealloc(int **fd, t_cmd *cmd, int *pid, int unlink);

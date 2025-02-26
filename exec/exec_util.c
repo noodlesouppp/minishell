@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 02:05:51 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 02:52:50 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/25 23:40:41 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,13 @@ void	proc_dealloc(int **fd, t_cmd *cmd, int *pid, int unlink)
 		unlink_file(cmd);
 	if (pid)
 		free(pid);
-	while (fd && ++i < cnt + 1)
+	while (fd && ++i < cnt + 1){
+		if (fd[i][0] > 2)
+		close(fd[i][0]);
+		if (fd[i][1] > 2)
+		close(fd[i][1]);
 		free(fd[i]);
+	}
 	if (fd)
 		free(fd);
 	while (cmd)

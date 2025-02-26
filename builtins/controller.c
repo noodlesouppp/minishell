@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 11:41:21 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 20:10:58 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/26 00:29:38 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	builtin_control(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 	{
 		if (set_redirect(cmd, fd, child_num))
 			return (1);
-		std_fd = set_fd(fd, proc_cnt, child_num);
+		std_fd = set_fd_builtin(fd, proc_cnt, child_num);
 		set_handler(print_newline, print_newline);
 	}
 	g_exit_stat = exec_builtin(cur_cmd, fd);
@@ -61,6 +61,8 @@ int	builtin_control(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 	{
 		dup2(std_fd[0], STDIN_FILENO);
 		dup2(std_fd[1], STDOUT_FILENO);
+		close(std_fd[0]);
+		close(std_fd[1]);
 		free(std_fd);
 	}
 	return (g_exit_stat);

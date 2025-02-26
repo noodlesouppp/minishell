@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 04:32:45 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/26 00:30:41 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	execute_cmd(t_cmd *cmd, int child, int **fd)
 		proc_dealloc(fd, cmd, NULL, 1);
 		exit(EXIT_SUCCESS);
 	}
-	free(set_fd(fd, cmd->pipe_count + 1, child));
+	set_fd(fd, cmd->pipe_count + 1, child);
 	if (is_builtin(cur_cmd, child))
 		run_builtin(cur_cmd, cmd, child, fd);
 	path = find_path(cur_cmd, fd);
