@@ -6,11 +6,26 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 02:05:51 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 23:40:41 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/27 22:22:07 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execute.h"
+
+void	free_fd(int **fd, int cnt)
+{
+	int	i;
+
+	i = -1;
+	while (fd && ++i < cnt + 1)
+	{
+		if (fd[i][0] > 2)
+			close(fd[i][0]);
+		if (fd[i][1] > 2)
+			close(fd[i][1]);
+		free(fd[i]);
+	}
+}
 
 /* frees all command resources 
 	removes temp heredoc files
@@ -30,13 +45,7 @@ void	proc_dealloc(int **fd, t_cmd *cmd, int *pid, int unlink)
 		unlink_file(cmd);
 	if (pid)
 		free(pid);
-	while (fd && ++i < cnt + 1){
-		if (fd[i][0] > 2)
-		close(fd[i][0]);
-		if (fd[i][1] > 2)
-		close(fd[i][1]);
-		free(fd[i]);
-	}
+	free_fd(fd, cnt);
 	if (fd)
 		free(fd);
 	while (cmd)
