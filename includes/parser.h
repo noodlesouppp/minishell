@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:18:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/19 16:08:51 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/28 04:22:02 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ typedef struct s_token
 
 /* parser.c */
 t_cmd		*parse_cmd(char *line, t_env *env);
+char		**get_tokens(char *line, t_env *env);
+char		*detokenise(char **tokens);
+
+/* get_cmd */
 t_cmd		*get_cmd_info(char **token, t_env *env);
 void		init_input(t_cmd *cmd, char **token, int unit);
 t_cmd		*init_input_util(t_cmd *cmd, char **token, int *i, int *unit);
