@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:39:31 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:13:21 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/28 23:04:21 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	add_env(char *env, t_env **head)
 	tmp = *head;
 	key_length = cnt_key_length(env);
 	if (key_length == 0)
-		return (err_print("setenv ", env, ": Invalid argument", -1));
+		return (err_print("env ", env, ": Invalid argument", -1));
 	if (key_length > 0)
 		env[key_length] = '\0';
 	while (tmp)
