@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 10:02:03 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/28 04:22:55 by yousong          ###   ########.fr       */
+/*   Updated: 2025/02/28 22:56:59 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	**get_tokens(char *line, t_env *env)
 		return (NULL);
 	}
 	token = remove_empty(token);
+	return (token);
 }
 
 t_cmd	*parse_cmd(char *line, t_env *env)
