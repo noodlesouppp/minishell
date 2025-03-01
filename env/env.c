@@ -6,14 +6,14 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:39:31 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/28 23:04:21 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/01 00:12:20 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/environment.h"
 #include "../includes/builtins.h"
 
-static void	env_add_back(char *env, int key_length, t_env **head)
+static void	env_add_new(char *env, int key_length, t_env **head)
 {
 	t_env	*new;
 	t_env	*tmp;
@@ -76,7 +76,7 @@ int	add_env(char *env, t_env **head)
 		}
 		tmp = tmp->next;
 	}
-	env_add_back(env, key_length, head);
+	env_add_new(env, key_length, head);
 	return (0);
 }
 
