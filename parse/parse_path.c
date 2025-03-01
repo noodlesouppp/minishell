@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:14:52 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:59:32 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/01 03:30:57 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	expand_token(char **token, int dollar_idx, t_env *env_head)
 	(*token)[dollar_idx] = '\0';
 	result = ft_strjoin(*token, env);
 	tmp = result;
-	result = ft_strjoin(result, &(*token)[dollar_idx + len + 1]);
+	result = ft_strjoin(tmp, &(*token)[dollar_idx + len + 1]);
 	free(tmp);
 	free(key);
 	free(*token);
