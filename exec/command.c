@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/03/02 01:48:23 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 04:48:56 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	**parse_path(char *input, t_env *env, t_cmd *cmd, int **fd)
 				0, 127);
 		free_envlist(env);
 		proc_dealloc(fd, cmd, NULL, 1);
-		exit(cmd->env->exit_stat);
+		exit(127);
 	}
 	parsed_path = ft_split(tmp, ':');
 	i = -1;
@@ -64,7 +64,7 @@ char	*find_path(t_cmd *cmd, int **fd)
 	cmd->env->exit_stat = err_print(cmd->input[0], ": cmd not found", 0, 127);
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
-	exit(cmd->env->exit_stat);
+	exit(127);
 }
 
 static void	exec_error(t_cmd *cmd, int **fd, char *path)
@@ -73,16 +73,19 @@ static void	exec_error(t_cmd *cmd, int **fd, char *path)
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
 	free(path);
-	exit(cmd->env->exit_stat);
+	exit(126);
 }
 
 static void	run_builtin(t_cmd *cur_cmd, t_cmd *cmd, int child, int **fd)
 {
+	int	exit_code;
+
 	cmd->env->exit_stat = builtin_control(cur_cmd, fd,
 			cmd->pipe_count + 1, child);
+	exit_code = cmd->env->exit_stat;
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
-	exit(cmd->env->exit_stat);
+	exit(exit_code);
 }
 
 void	execute_cmd(t_cmd *cmd, int child, int **fd)

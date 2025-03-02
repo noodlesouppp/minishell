@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/03/02 01:52:33 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 04:50:24 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	arg_check(t_cmd *cmd, int cnt, int **fd)
 			cmd->env->exit_stat = 2;
 			free_envlist(cmd->env);
 			proc_dealloc(fd, cmd, NULL, 0);
-			exit(cmd->env->exit_stat);
+			exit(2);
 		}
 	}
 	if (cnt > 2)
@@ -42,6 +42,7 @@ static int	arg_check(t_cmd *cmd, int cnt, int **fd)
 int	ft_exit(t_cmd *cmd, int **fd)
 {
 	int	cnt;
+	int	exit_code;
 
 	cnt = 0;
 	while (cmd->input[cnt])
@@ -52,8 +53,8 @@ int	ft_exit(t_cmd *cmd, int **fd)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
 		cmd->env->exit_stat = ((unsigned char)ft_atoi(cmd->input[1]));
+	exit_code = cmd->env->exit_stat;
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 0);
-	exit(cmd->env->exit_stat);
-	return (0);
+	exit(exit_code);
 }
