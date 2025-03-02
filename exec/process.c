@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/03/02 02:40:05 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 22:25:42 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	process(t_cmd *cmd)
 	child_num = -1;
 	if (heredoc(cmd))
 	{
-		proc_dealloc(NULL, cmd, NULL, 0);
+		proc_dealloc(NULL, cmd, NULL, 1);
 		return ;
 	}
 	fd = make_pipe(cmd);
