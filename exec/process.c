@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:37:06 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 23:33:58 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 02:40:05 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 		set_handler(print_newline, print_newline);
 	close_fd(fd, cmd->pipe_count + 1, -1);
 	last_stat = wait_for_child(cmd, pid);
-	g_exit_stat = last_stat;
+	cmd->env->exit_stat = last_stat;
 	proc_dealloc(fd, cmd, pid, 1);
 }
 

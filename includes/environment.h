@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:27:42 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/15 07:51:33 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/01 22:36:36 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
+	int				exit_stat;
 }	t_env;
 
 /* env_util.c */

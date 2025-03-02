@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:02:19 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 00:55:34 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 01:52:33 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static int	arg_check(t_cmd *cmd, int cnt, int **fd)
 		{
 			ft_putstr_fd("exit\n", STDERR_FILENO);
 			err_print("exit: ", cmd->input[1], ": numeric arg required", 2);
-			g_exit_stat = 2;
+			cmd->env->exit_stat = 2;
 			free_envlist(cmd->env);
 			proc_dealloc(fd, cmd, NULL, 0);
-			exit(g_exit_stat);
+			exit(cmd->env->exit_stat);
 		}
 	}
 	if (cnt > 2)
@@ -51,9 +51,9 @@ int	ft_exit(t_cmd *cmd, int **fd)
 	if (cmd->pipe_count == 0)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
-		g_exit_stat = ((unsigned char)ft_atoi(cmd->input[1]));
+		cmd->env->exit_stat = ((unsigned char)ft_atoi(cmd->input[1]));
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 0);
-	exit(g_exit_stat);
+	exit(cmd->env->exit_stat);
 	return (0);
 }

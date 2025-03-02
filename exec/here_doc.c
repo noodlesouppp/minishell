@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:38:00 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/25 02:11:47 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 02:45:04 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int	heredoc(t_cmd *cmd)
 		set_handler(heredoc_quiet, NULL);
 		waitpid(pid, &statloc, 0);
 		if (WIFEXITED(statloc))
-			g_exit_stat = WEXITSTATUS(statloc);
+			cmd->env->exit_stat = WEXITSTATUS(statloc);
 		else if (WIFSIGNALED(statloc))
-			g_exit_stat = 128 + WTERMSIG(statloc);
+			cmd->env->exit_stat = 128 + WTERMSIG(statloc);
 		set_echoctl(1);
 	}
 	else
@@ -122,5 +122,5 @@ int	heredoc(t_cmd *cmd)
 		set_handler(heredoc_sigint, NULL);
 		heredoc_init(cmd);
 	}
-	return (g_exit_stat);
+	return (cmd->env->exit_stat);
 }

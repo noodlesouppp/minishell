@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 00:11:01 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/18 17:05:04 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 01:53:09 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ int	unset(t_cmd *cmd)
 			del_env(cmd->input[i], cmd);
 		i++;
 	}
-	g_exit_stat = exit_status;
+	cmd->env->exit_stat = exit_status;
 	return (exit_status);
 }

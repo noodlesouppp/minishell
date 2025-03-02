@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:39:31 by yousong           #+#    #+#             */
-/*   Updated: 2025/03/01 00:12:20 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/01 22:50:26 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	env_add_new(char *env, int key_length, t_env **head)
 
 	new = ft_calloc(1, sizeof(t_env));
 	new->key = ft_strdup(env);
+	new->exit_stat = 0;
 	if (key_length > 0)
 	{
 		if (!is_equal("SHLVL", new->key))

@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 13:16:08 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/26 00:30:41 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 01:48:23 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ static char	**parse_path(char *input, t_env *env, t_cmd *cmd, int **fd)
 	tmp = get_env("PATH", env);
 	if (tmp == NULL)
 	{
-		g_exit_stat = err_print(input, ": No such file or directory", 0, 127);
+		cmd->env->exit_stat = err_print(input, ": No such file or directory",
+				0, 127);
 		free_envlist(env);
 		proc_dealloc(fd, cmd, NULL, 1);
-		exit(g_exit_stat);
+		exit(cmd->env->exit_stat);
 	}
 	parsed_path = ft_split(tmp, ':');
 	i = -1;
@@ -60,27 +61,28 @@ char	*find_path(t_cmd *cmd, int **fd)
 	}
 	if (env_path)
 		path_dealloc(env_path);
-	g_exit_stat = err_print(cmd->input[0], ": command not found", 0, 127);
+	cmd->env->exit_stat = err_print(cmd->input[0], ": cmd not found", 0, 127);
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
-	exit(g_exit_stat);
+	exit(cmd->env->exit_stat);
 }
 
 static void	exec_error(t_cmd *cmd, int **fd, char *path)
 {
-	g_exit_stat = err_print(path, ": ", "is a directory", 126);
+	cmd->env->exit_stat = err_print(path, ": ", "is a directory", 126);
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
 	free(path);
-	exit(g_exit_stat);
+	exit(cmd->env->exit_stat);
 }
 
 static void	run_builtin(t_cmd *cur_cmd, t_cmd *cmd, int child, int **fd)
 {
-	g_exit_stat = builtin_control(cur_cmd, fd, cmd->pipe_count + 1, child);
+	cmd->env->exit_stat = builtin_control(cur_cmd, fd,
+			cmd->pipe_count + 1, child);
 	free_envlist(cmd->env);
 	proc_dealloc(fd, cmd, NULL, 1);
-	exit(g_exit_stat);
+	exit(cmd->env->exit_stat);
 }
 
 void	execute_cmd(t_cmd *cmd, int child, int **fd)

@@ -6,7 +6,7 @@
 /*   By: yousong <yousong@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:31:17 by yousong           #+#    #+#             */
-/*   Updated: 2025/02/18 16:28:27 by yousong          ###   ########.fr       */
+/*   Updated: 2025/03/02 01:52:56 by yousong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	export(t_cmd *cmd)
 	if (!cmd->input[1])
 	{
 		print_env(cmd);
-		return (g_exit_stat);
+		return (cmd->env->exit_stat);
 	}
 	i = 1;
 	while (cmd->input[i])
@@ -48,13 +48,13 @@ int	export(t_cmd *cmd)
 		{
 			err_print("export: '", cmd->input[i],
 				"': not a valid identifier", 1);
-			g_exit_stat = 1;
+			cmd->env->exit_stat = 1;
 		}
 		else if (add_env(cmd->input[i], &cmd->env) < 0)
 		{
-			g_exit_stat = 1;
+			cmd->env->exit_stat = 1;
 		}
 		i++;
 	}
-	return (g_exit_stat);
+	return (cmd->env->exit_stat);
 }
